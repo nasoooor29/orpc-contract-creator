@@ -20,7 +20,7 @@ function toCamelCase(str: string): string {
 }
 
 /**
- * Generate the oRPC contract file content
+ * Generate the oRPC contract file content using detailed input/output structure
  */
 export function generateContract(
   endpoints: ParsedEndpoint[],
@@ -85,19 +85,24 @@ function generateEndpointContract(
 ): string {
   const parts: string[] = [];
   
-  // Route definition
+  // Route definition with detailed mode
   const routePath = endpoint.path.replace(/{([^}]+)}/g, "{$1}");
   parts.push(`oc`);
-  parts.push(`.route({ method: "${endpoint.method}", path: "${routePath}" })`);
+  parts.push(`.route({
+    method: "${endpoint.method}",
+    path: "${routePath}",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })`);
 
-  // Input schema
-  const inputSchema = generateInputSchema(endpoint, schemas);
+  // Input schema (detailed mode: params, query, body, headers)
+  const inputSchema = generateDetailedInputSchema(endpoint, schemas);
   if (inputSchema) {
     parts.push(`.input(${inputSchema})`);
   }
 
-  // Output schema
-  const outputSchema = generateOutputSchema(endpoint, schemas);
+  // Output schema (detailed mode: status, body, headers)
+  const outputSchema = generateDetailedOutputSchema(endpoint, schemas);
   if (outputSchema) {
     parts.push(`.output(${outputSchema})`);
   }
@@ -111,62 +116,62 @@ function generateEndpointContract(
   return parts.join("\n  ");
 }
 
-function generateInputSchema(
+function generateDetailedInputSchema(
   endpoint: ParsedEndpoint,
   schemas: Map<string, JSONSchema>
 ): string | null {
-  const properties: string[] = [];
+  const inputParts: string[] = [];
 
-  // Add path parameters
-  for (const param of endpoint.pathParams) {
-    const zodType = getZodTypeForParam(param);
-    properties.push(`${sanitizePropertyName(param.name)}: ${zodType}`);
-  }
-
-  // Add query parameters
-  for (const param of endpoint.queryParams) {
-    let zodType = getZodTypeForParam(param);
-    if (!param.required) {
-      zodType += ".optional()";
+  // Params (path parameters)
+  if (endpoint.pathParams.length > 0) {
+    const paramProps: string[] = [];
+    for (const param of endpoint.pathParams) {
+      const zodType = getZodTypeForParam(param, true); // coerce for path params
+      paramProps.push(`${sanitizePropertyName(param.name)}: ${zodType}`);
     }
-    properties.push(`${sanitizePropertyName(param.name)}: ${zodType}`);
+    inputParts.push(`params: z.object({\n      ${paramProps.join(",\n      ")}\n    })`);
   }
 
-  // Add request body
+  // Query parameters
+  if (endpoint.queryParams.length > 0) {
+    const queryProps: string[] = [];
+    for (const param of endpoint.queryParams) {
+      let zodType = getZodTypeForParam(param, false);
+      if (!param.required) {
+        zodType += ".optional()";
+      }
+      queryProps.push(`${sanitizePropertyName(param.name)}: ${zodType}`);
+    }
+    inputParts.push(`query: z.object({\n      ${queryProps.join(",\n      ")}\n    })`);
+  }
+
+  // Body (request body)
   if (endpoint.requestBody) {
     const schemaRef = getSchemaReference(endpoint.requestBody.schemaName, schemas);
-    if (properties.length === 0) {
-      // If no other params, just use the body schema directly
-      return schemaRef;
-    }
-    // Merge body with other params
-    if (!endpoint.requestBody.required) {
-      properties.push(`body: ${schemaRef}.optional()`);
+    if (endpoint.requestBody.required) {
+      inputParts.push(`body: ${schemaRef}`);
     } else {
-      properties.push(`body: ${schemaRef}`);
+      inputParts.push(`body: ${schemaRef}.optional()`);
     }
   }
 
-  if (properties.length === 0) {
+  if (inputParts.length === 0) {
     return null;
   }
 
-  return `z.object({\n    ${properties.join(",\n    ")}\n  })`;
+  return `z.object({\n    ${inputParts.join(",\n    ")}\n  })`;
 }
 
-function getZodTypeForParam(param: ParsedParameter): string {
+function getZodTypeForParam(param: ParsedParameter, coerce: boolean): string {
   const { type, format } = param;
-
-  // For path params, we often need coercion
-  const needsCoerce = param.required && (type === "number" || type === "integer");
 
   switch (type) {
     case "integer":
-      return needsCoerce ? "z.coerce.number().int()" : "z.number().int()";
+      return coerce ? "z.coerce.number().int()" : "z.number().int()";
     case "number":
-      return needsCoerce ? "z.coerce.number()" : "z.number()";
+      return coerce ? "z.coerce.number()" : "z.number()";
     case "boolean":
-      return "z.coerce.boolean()";
+      return coerce ? "z.coerce.boolean()" : "z.boolean()";
     case "array":
       return "z.array(z.string())";
     case "string":
@@ -226,26 +231,43 @@ function isEmptySchema(schema: JSONSchema): boolean {
   );
 }
 
-function generateOutputSchema(
+function generateDetailedOutputSchema(
   endpoint: ParsedEndpoint,
   schemas: Map<string, JSONSchema>
 ): string | null {
   const successResponses = endpoint.successResponses.filter((r) => r.schemaName);
 
   if (successResponses.length === 0) {
+    // Even without a body, we might want to return status
+    if (endpoint.successResponses.length > 0) {
+      const status = endpoint.successResponses[0]?.statusCode || 200;
+      return `z.object({
+    status: z.literal(${status}),
+    body: z.undefined()
+  })`;
+    }
     return null;
   }
 
   if (successResponses.length === 1) {
     const response = successResponses[0]!;
-    return getSchemaReference(response.schemaName!, schemas);
+    const bodySchema = getSchemaReference(response.schemaName!, schemas);
+    return `z.object({
+    status: z.literal(${response.statusCode}),
+    body: ${bodySchema}
+  })`;
   }
 
-  // Multiple success responses - create a union
-  const schemaRefs = successResponses.map((r) =>
-    getSchemaReference(r.schemaName!, schemas)
-  );
-  return `z.union([${schemaRefs.join(", ")}])`;
+  // Multiple success responses - create a union with status discriminator
+  const responseSchemas = successResponses.map((r) => {
+    const bodySchema = getSchemaReference(r.schemaName!, schemas);
+    return `z.object({
+      status: z.literal(${r.statusCode}),
+      body: ${bodySchema}
+    })`;
+  });
+  
+  return `z.union([${responseSchemas.join(", ")}])`;
 }
 
 function generateErrorSchema(

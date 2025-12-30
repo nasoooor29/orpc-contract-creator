@@ -3,13 +3,31 @@ import { z } from "zod";
 import * as zodTypes from "./zod-types.gen";
 
 const healthStatusHealthGet = oc
-  .route({ method: "GET", path: "/health" })
-  .output(z.object({}).passthrough());
+  .route({
+    method: "GET",
+    path: "/health",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
+  .output(z.object({
+    status: z.literal(200),
+    body: z.object({}).passthrough()
+  }));
 
 const searchSearchPost = oc
-  .route({ method: "POST", path: "/search" })
-  .input(zodTypes.SearchRequestSchema)
-  .output(z.array(zodTypes.SearchResponseSchema))
+  .route({
+    method: "POST",
+    path: "/search",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
+  .input(z.object({
+    body: zodTypes.SearchRequestSchema
+  }))
+  .output(z.object({
+    status: z.literal(200),
+    body: z.array(zodTypes.SearchResponseSchema)
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -17,12 +35,24 @@ const searchSearchPost = oc
 });
 
 const getThumbnailThumbnailsSceneIdGet = oc
-  .route({ method: "GET", path: "/thumbnails/{scene_id}" })
+  .route({
+    method: "GET",
+    path: "/thumbnails/{scene_id}",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    scene_id: z.string(),
-    size: z.number().int().optional()
+    params: z.object({
+      scene_id: z.string()
+    }),
+    query: z.object({
+      size: z.number().int().optional()
+    })
   }))
-  .output(z.object({}).passthrough())
+  .output(z.object({
+    status: z.literal(200),
+    body: z.object({}).passthrough()
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -30,14 +60,24 @@ const getThumbnailThumbnailsSceneIdGet = oc
 });
 
 const getTileTilesSceneIdZXYPngGet = oc
-  .route({ method: "GET", path: "/tiles/{scene_id}/{z}/{x}/{y}.png" })
+  .route({
+    method: "GET",
+    path: "/tiles/{scene_id}/{z}/{x}/{y}.png",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    scene_id: z.string(),
-    z: z.coerce.number().int(),
-    x: z.coerce.number().int(),
-    y: z.coerce.number().int()
+    params: z.object({
+      scene_id: z.string(),
+      z: z.coerce.number().int(),
+      x: z.coerce.number().int(),
+      y: z.coerce.number().int()
+    })
   }))
-  .output(z.object({}).passthrough())
+  .output(z.object({
+    status: z.literal(200),
+    body: z.object({}).passthrough()
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -45,13 +85,23 @@ const getTileTilesSceneIdZXYPngGet = oc
 });
 
 const getOrdersOrdersGet = oc
-  .route({ method: "GET", path: "/orders" })
+  .route({
+    method: "GET",
+    path: "/orders",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    last_evaluated_key: z.string().optional(),
-    username: z.string().optional(),
-    state: z.string().optional()
+    query: z.object({
+      last_evaluated_key: z.string().optional(),
+      username: z.string().optional(),
+      state: z.string().optional()
+    })
   }))
-  .output(zodTypes.OrdersResponseSchema)
+  .output(z.object({
+    status: z.literal(200),
+    body: zodTypes.OrdersResponseSchema
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -59,9 +109,19 @@ const getOrdersOrdersGet = oc
 });
 
 const createOrderOrdersPost = oc
-  .route({ method: "POST", path: "/orders" })
-  .input(zodTypes.OrderRequestSchema)
-  .output(zodTypes.OrderResponseSchema)
+  .route({
+    method: "POST",
+    path: "/orders",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
+  .input(z.object({
+    body: zodTypes.OrderRequestSchema
+  }))
+  .output(z.object({
+    status: z.literal(201),
+    body: zodTypes.OrderResponseSchema
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -69,11 +129,21 @@ const createOrderOrdersPost = oc
 });
 
 const getOrderOrdersEomapIdGet = oc
-  .route({ method: "GET", path: "/orders/{eomap_id}" })
+  .route({
+    method: "GET",
+    path: "/orders/{eomap_id}",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    eomap_id: z.string()
+    params: z.object({
+      eomap_id: z.string()
+    })
   }))
-  .output(zodTypes.OrderDetailsResponseSchema)
+  .output(z.object({
+    status: z.literal(200),
+    body: zodTypes.OrderDetailsResponseSchema
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -81,11 +151,21 @@ const getOrderOrdersEomapIdGet = oc
 });
 
 const getOrderStatusOrdersEomapIdStatusGet = oc
-  .route({ method: "GET", path: "/orders/{eomap_id}/status" })
+  .route({
+    method: "GET",
+    path: "/orders/{eomap_id}/status",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    eomap_id: z.string()
+    params: z.object({
+      eomap_id: z.string()
+    })
   }))
-  .output(zodTypes.OrderStatusResponseSchema)
+  .output(z.object({
+    status: z.literal(200),
+    body: zodTypes.OrderStatusResponseSchema
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
@@ -93,12 +173,22 @@ const getOrderStatusOrdersEomapIdStatusGet = oc
 });
 
 const updateOrderStatusOrdersEomapIdStatusPost = oc
-  .route({ method: "POST", path: "/orders/{eomap_id}/status" })
+  .route({
+    method: "POST",
+    path: "/orders/{eomap_id}/status",
+    inputStructure: "detailed",
+    outputStructure: "detailed"
+  })
   .input(z.object({
-    eomap_id: z.string(),
+    params: z.object({
+      eomap_id: z.string()
+    }),
     body: zodTypes.OrderUpdateRequestSchema
   }))
-  .output(z.object({}).passthrough())
+  .output(z.object({
+    status: z.literal(200),
+    body: z.object({}).passthrough()
+  }))
   .errors({
   UNPROCESSABLE_CONTENT: {
     data: zodTypes.HTTPValidationErrorSchema
