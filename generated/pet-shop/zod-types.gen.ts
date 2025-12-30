@@ -1,53 +1,53 @@
 import { z } from "zod";
 
 export const OrderSchema = z.object({
-  id: z.number().int().optional(),
-  petId: z.number().int().optional(),
-  quantity: z.number().int().optional(),
-  shipDate: z.string().datetime().optional(),
-  status: z.enum(["placed", "approved", "delivered"]).optional(),
-  complete: z.boolean().optional()
+  id: z.number().int(),
+  petId: z.number().int(),
+  quantity: z.number().int(),
+  shipDate: z.string().datetime(),
+  status: z.enum(["placed", "approved", "delivered"]),
+  complete: z.boolean()
 });
 export type Order = z.infer<typeof OrderSchema>;
 
 export const CategorySchema = z.object({
-  id: z.number().int().optional(),
-  name: z.string().optional()
+  id: z.number().int(),
+  name: z.string()
 });
 export type Category = z.infer<typeof CategorySchema>;
 
 export const UserSchema = z.object({
-  id: z.number().int().optional(),
-  username: z.string().optional(),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().optional(),
-  password: z.string().optional(),
-  phone: z.string().optional(),
-  userStatus: z.number().int().optional()
+  id: z.number().int(),
+  username: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string(),
+  password: z.string(),
+  phone: z.string(),
+  userStatus: z.number().int()
 });
 export type User = z.infer<typeof UserSchema>;
 
 export const TagSchema = z.object({
-  id: z.number().int().optional(),
-  name: z.string().optional()
+  id: z.number().int(),
+  name: z.string()
 });
 export type Tag = z.infer<typeof TagSchema>;
 
 export const PetSchema = z.object({
-  id: z.number().int().optional(),
+  id: z.number().int(),
   name: z.string(),
-  category: CategorySchema.optional(),
+  category: CategorySchema,
   photoUrls: z.array(z.string()),
-  tags: z.array(TagSchema).optional(),
-  status: z.enum(["available", "pending", "sold"]).optional()
+  tags: z.array(TagSchema),
+  status: z.enum(["available", "pending", "sold"])
 });
 export type Pet = z.infer<typeof PetSchema>;
 
 export const ApiResponseSchema = z.object({
-  code: z.number().int().optional(),
-  type: z.string().optional(),
-  message: z.string().optional()
+  code: z.number().int(),
+  type: z.string(),
+  message: z.string()
 });
 export type ApiResponse = z.infer<typeof ApiResponseSchema>;
 

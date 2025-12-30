@@ -6,8 +6,7 @@ const apiV2AbilityList = oc
   .route({
     method: "GET",
     path: "/api/v2/ability/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -16,34 +15,26 @@ const apiV2AbilityList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedAbilitySummaryListSchema
-  }));
+  .output(zodTypes.PaginatedAbilitySummaryListSchema);
 
 const apiV2AbilityRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/ability/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.AbilityDetailSchema
-  }));
+  .output(zodTypes.AbilityDetailSchema);
 
 const apiV2BerryList = oc
   .route({
     method: "GET",
     path: "/api/v2/berry/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -52,34 +43,26 @@ const apiV2BerryList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedBerrySummaryListSchema
-  }));
+  .output(zodTypes.PaginatedBerrySummaryListSchema);
 
 const apiV2BerryRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/berry/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.BerryDetailSchema
-  }));
+  .output(zodTypes.BerryDetailSchema);
 
 const apiV2BerryFirmnessList = oc
   .route({
     method: "GET",
     path: "/api/v2/berry-firmness/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -88,34 +71,26 @@ const apiV2BerryFirmnessList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedBerryFirmnessSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedBerryFirmnessSummaryListSchema);
 
 const apiV2BerryFirmnessRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/berry-firmness/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.BerryFirmnessDetailSchema
-  }));
+  .output(zodTypes.BerryFirmnessDetailSchema);
 
 const apiV2BerryFlavorList = oc
   .route({
     method: "GET",
     path: "/api/v2/berry-flavor/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -124,34 +99,26 @@ const apiV2BerryFlavorList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedBerryFlavorSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedBerryFlavorSummaryListSchema);
 
 const apiV2BerryFlavorRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/berry-flavor/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.BerryFlavorDetailSchema
-  }));
+  .output(zodTypes.BerryFlavorDetailSchema);
 
 const apiV2CharacteristicList = oc
   .route({
     method: "GET",
     path: "/api/v2/characteristic/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -160,34 +127,26 @@ const apiV2CharacteristicList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedCharacteristicSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedCharacteristicSummaryListSchema);
 
 const apiV2CharacteristicRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/characteristic/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.CharacteristicDetailSchema
-  }));
+  .output(zodTypes.CharacteristicDetailSchema);
 
 const apiV2ContestTypeList = oc
   .route({
     method: "GET",
     path: "/api/v2/contest-type/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -196,34 +155,26 @@ const apiV2ContestTypeList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedContestTypeSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedContestTypeSummaryListSchema);
 
 const apiV2ContestTypeRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/contest-type/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ContestTypeDetailSchema
-  }));
+  .output(zodTypes.ContestTypeDetailSchema);
 
 const apiV2ContestEffectList = oc
   .route({
     method: "GET",
     path: "/api/v2/contest-effect/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -232,34 +183,26 @@ const apiV2ContestEffectList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedContestEffectSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedContestEffectSummaryListSchema);
 
 const apiV2ContestEffectRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/contest-effect/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ContestEffectDetailSchema
-  }));
+  .output(zodTypes.ContestEffectDetailSchema);
 
 const apiV2EggGroupList = oc
   .route({
     method: "GET",
     path: "/api/v2/egg-group/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -268,34 +211,26 @@ const apiV2EggGroupList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEggGroupSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEggGroupSummaryListSchema);
 
 const apiV2EggGroupRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/egg-group/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EggGroupDetailSchema
-  }));
+  .output(zodTypes.EggGroupDetailSchema);
 
 const apiV2EncounterMethodList = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-method/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -304,34 +239,26 @@ const apiV2EncounterMethodList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEncounterMethodSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEncounterMethodSummaryListSchema);
 
 const apiV2EncounterMethodRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-method/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EncounterMethodDetailSchema
-  }));
+  .output(zodTypes.EncounterMethodDetailSchema);
 
 const apiV2EncounterConditionList = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-condition/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -340,34 +267,26 @@ const apiV2EncounterConditionList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEncounterConditionSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEncounterConditionSummaryListSchema);
 
 const apiV2EncounterConditionRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-condition/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EncounterConditionDetailSchema
-  }));
+  .output(zodTypes.EncounterConditionDetailSchema);
 
 const apiV2EncounterConditionValueList = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-condition-value/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -376,34 +295,26 @@ const apiV2EncounterConditionValueList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEncounterConditionValueSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEncounterConditionValueSummaryListSchema);
 
 const apiV2EncounterConditionValueRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/encounter-condition-value/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EncounterConditionValueDetailSchema
-  }));
+  .output(zodTypes.EncounterConditionValueDetailSchema);
 
 const apiV2EvolutionChainList = oc
   .route({
     method: "GET",
     path: "/api/v2/evolution-chain/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -412,34 +323,26 @@ const apiV2EvolutionChainList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEvolutionChainSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEvolutionChainSummaryListSchema);
 
 const apiV2EvolutionChainRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/evolution-chain/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EvolutionChainDetailSchema
-  }));
+  .output(zodTypes.EvolutionChainDetailSchema);
 
 const apiV2EvolutionTriggerList = oc
   .route({
     method: "GET",
     path: "/api/v2/evolution-trigger/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -448,34 +351,26 @@ const apiV2EvolutionTriggerList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedEvolutionTriggerSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedEvolutionTriggerSummaryListSchema);
 
 const apiV2EvolutionTriggerRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/evolution-trigger/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.EvolutionTriggerDetailSchema
-  }));
+  .output(zodTypes.EvolutionTriggerDetailSchema);
 
 const apiV2GenerationList = oc
   .route({
     method: "GET",
     path: "/api/v2/generation/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -484,34 +379,26 @@ const apiV2GenerationList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedGenerationSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedGenerationSummaryListSchema);
 
 const apiV2GenerationRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/generation/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GenerationDetailSchema
-  }));
+  .output(zodTypes.GenerationDetailSchema);
 
 const apiV2GenderList = oc
   .route({
     method: "GET",
     path: "/api/v2/gender/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -520,34 +407,26 @@ const apiV2GenderList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedGenderSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedGenderSummaryListSchema);
 
 const apiV2GenderRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/gender/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GenderDetailSchema
-  }));
+  .output(zodTypes.GenderDetailSchema);
 
 const apiV2GrowthRateList = oc
   .route({
     method: "GET",
     path: "/api/v2/growth-rate/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -556,34 +435,26 @@ const apiV2GrowthRateList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedGrowthRateSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedGrowthRateSummaryListSchema);
 
 const apiV2GrowthRateRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/growth-rate/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GrowthRateDetailSchema
-  }));
+  .output(zodTypes.GrowthRateDetailSchema);
 
 const apiV2ItemList = oc
   .route({
     method: "GET",
     path: "/api/v2/item/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -592,34 +463,26 @@ const apiV2ItemList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedItemSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedItemSummaryListSchema);
 
 const apiV2ItemRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/item/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ItemDetailSchema
-  }));
+  .output(zodTypes.ItemDetailSchema);
 
 const apiV2ItemCategoryList = oc
   .route({
     method: "GET",
     path: "/api/v2/item-category/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -628,34 +491,26 @@ const apiV2ItemCategoryList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedItemCategorySummaryListSchema
-  }));
+  .output(zodTypes.PaginatedItemCategorySummaryListSchema);
 
 const apiV2ItemCategoryRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/item-category/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ItemCategoryDetailSchema
-  }));
+  .output(zodTypes.ItemCategoryDetailSchema);
 
 const apiV2ItemAttributeList = oc
   .route({
     method: "GET",
     path: "/api/v2/item-attribute/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -664,34 +519,26 @@ const apiV2ItemAttributeList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedItemAttributeSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedItemAttributeSummaryListSchema);
 
 const apiV2ItemAttributeRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/item-attribute/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ItemAttributeDetailSchema
-  }));
+  .output(zodTypes.ItemAttributeDetailSchema);
 
 const apiV2ItemFlingEffectList = oc
   .route({
     method: "GET",
     path: "/api/v2/item-fling-effect/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -700,34 +547,26 @@ const apiV2ItemFlingEffectList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedItemFlingEffectSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedItemFlingEffectSummaryListSchema);
 
 const apiV2ItemFlingEffectRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/item-fling-effect/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ItemFlingEffectDetailSchema
-  }));
+  .output(zodTypes.ItemFlingEffectDetailSchema);
 
 const apiV2ItemPocketList = oc
   .route({
     method: "GET",
     path: "/api/v2/item-pocket/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -736,34 +575,26 @@ const apiV2ItemPocketList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedItemPocketSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedItemPocketSummaryListSchema);
 
 const apiV2ItemPocketRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/item-pocket/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ItemPocketDetailSchema
-  }));
+  .output(zodTypes.ItemPocketDetailSchema);
 
 const apiV2LanguageList = oc
   .route({
     method: "GET",
     path: "/api/v2/language/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -772,34 +603,26 @@ const apiV2LanguageList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedLanguageSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedLanguageSummaryListSchema);
 
 const apiV2LanguageRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/language/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.LanguageDetailSchema
-  }));
+  .output(zodTypes.LanguageDetailSchema);
 
 const apiV2LocationList = oc
   .route({
     method: "GET",
     path: "/api/v2/location/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -808,34 +631,26 @@ const apiV2LocationList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedLocationSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedLocationSummaryListSchema);
 
 const apiV2LocationRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/location/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.LocationDetailSchema
-  }));
+  .output(zodTypes.LocationDetailSchema);
 
 const apiV2LocationAreaList = oc
   .route({
     method: "GET",
     path: "/api/v2/location-area/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -843,34 +658,26 @@ const apiV2LocationAreaList = oc
       offset: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedLocationAreaSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedLocationAreaSummaryListSchema);
 
 const apiV2LocationAreaRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/location-area/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.coerce.number().int()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.LocationAreaDetailSchema
-  }));
+  .output(zodTypes.LocationAreaDetailSchema);
 
 const apiV2MachineList = oc
   .route({
     method: "GET",
     path: "/api/v2/machine/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -879,34 +686,26 @@ const apiV2MachineList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMachineSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMachineSummaryListSchema);
 
 const apiV2MachineRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/machine/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MachineDetailSchema
-  }));
+  .output(zodTypes.MachineDetailSchema);
 
 const apiV2MoveList = oc
   .route({
     method: "GET",
     path: "/api/v2/move/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -915,34 +714,26 @@ const apiV2MoveList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveSummaryListSchema);
 
 const apiV2MoveRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveDetailSchema
-  }));
+  .output(zodTypes.MoveDetailSchema);
 
 const apiV2MoveAilmentList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-ailment/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -951,34 +742,26 @@ const apiV2MoveAilmentList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveMetaAilmentSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveMetaAilmentSummaryListSchema);
 
 const apiV2MoveAilmentRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-ailment/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveMetaAilmentDetailSchema
-  }));
+  .output(zodTypes.MoveMetaAilmentDetailSchema);
 
 const apiV2MoveBattleStyleList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-battle-style/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -987,34 +770,26 @@ const apiV2MoveBattleStyleList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveBattleStyleSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveBattleStyleSummaryListSchema);
 
 const apiV2MoveBattleStyleRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-battle-style/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveBattleStyleDetailSchema
-  }));
+  .output(zodTypes.MoveBattleStyleDetailSchema);
 
 const apiV2MoveCategoryList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-category/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1023,34 +798,26 @@ const apiV2MoveCategoryList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveMetaCategorySummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveMetaCategorySummaryListSchema);
 
 const apiV2MoveCategoryRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-category/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveMetaCategoryDetailSchema
-  }));
+  .output(zodTypes.MoveMetaCategoryDetailSchema);
 
 const apiV2MoveDamageClassList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-damage-class/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1059,34 +826,26 @@ const apiV2MoveDamageClassList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveDamageClassSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveDamageClassSummaryListSchema);
 
 const apiV2MoveDamageClassRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-damage-class/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveDamageClassDetailSchema
-  }));
+  .output(zodTypes.MoveDamageClassDetailSchema);
 
 const apiV2MoveLearnMethodList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-learn-method/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1095,34 +854,26 @@ const apiV2MoveLearnMethodList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveLearnMethodSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveLearnMethodSummaryListSchema);
 
 const apiV2MoveLearnMethodRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-learn-method/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveLearnMethodDetailSchema
-  }));
+  .output(zodTypes.MoveLearnMethodDetailSchema);
 
 const apiV2MoveTargetList = oc
   .route({
     method: "GET",
     path: "/api/v2/move-target/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1131,34 +882,26 @@ const apiV2MoveTargetList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedMoveTargetSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedMoveTargetSummaryListSchema);
 
 const apiV2MoveTargetRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/move-target/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.MoveTargetDetailSchema
-  }));
+  .output(zodTypes.MoveTargetDetailSchema);
 
 const apiV2NatureList = oc
   .route({
     method: "GET",
     path: "/api/v2/nature/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1167,34 +910,26 @@ const apiV2NatureList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedNatureSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedNatureSummaryListSchema);
 
 const apiV2NatureRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/nature/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.NatureDetailSchema
-  }));
+  .output(zodTypes.NatureDetailSchema);
 
 const apiV2PalParkAreaList = oc
   .route({
     method: "GET",
     path: "/api/v2/pal-park-area/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1203,34 +938,26 @@ const apiV2PalParkAreaList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPalParkAreaSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPalParkAreaSummaryListSchema);
 
 const apiV2PalParkAreaRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pal-park-area/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PalParkAreaDetailSchema
-  }));
+  .output(zodTypes.PalParkAreaDetailSchema);
 
 const apiV2PokedexList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokedex/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1239,34 +966,26 @@ const apiV2PokedexList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokedexSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokedexSummaryListSchema);
 
 const apiV2PokedexRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokedex/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokedexDetailSchema
-  }));
+  .output(zodTypes.PokedexDetailSchema);
 
 const apiV2PokemonList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1275,34 +994,26 @@ const apiV2PokemonList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonSummaryListSchema);
 
 const apiV2PokemonRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonDetailSchema
-  }));
+  .output(zodTypes.PokemonDetailSchema);
 
 const apiV2PokemonColorList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-color/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1311,34 +1022,26 @@ const apiV2PokemonColorList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonColorSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonColorSummaryListSchema);
 
 const apiV2PokemonColorRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-color/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonColorDetailSchema
-  }));
+  .output(zodTypes.PokemonColorDetailSchema);
 
 const apiV2PokemonFormList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-form/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1347,34 +1050,26 @@ const apiV2PokemonFormList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonFormSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonFormSummaryListSchema);
 
 const apiV2PokemonFormRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-form/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonFormDetailSchema
-  }));
+  .output(zodTypes.PokemonFormDetailSchema);
 
 const apiV2PokemonHabitatList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-habitat/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1383,34 +1078,26 @@ const apiV2PokemonHabitatList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonHabitatSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonHabitatSummaryListSchema);
 
 const apiV2PokemonHabitatRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-habitat/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonHabitatDetailSchema
-  }));
+  .output(zodTypes.PokemonHabitatDetailSchema);
 
 const apiV2PokemonShapeList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-shape/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1419,34 +1106,26 @@ const apiV2PokemonShapeList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonShapeSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonShapeSummaryListSchema);
 
 const apiV2PokemonShapeRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-shape/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonShapeDetailSchema
-  }));
+  .output(zodTypes.PokemonShapeDetailSchema);
 
 const apiV2PokemonSpeciesList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-species/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1455,34 +1134,26 @@ const apiV2PokemonSpeciesList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokemonSpeciesSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokemonSpeciesSummaryListSchema);
 
 const apiV2PokemonSpeciesRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon-species/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokemonSpeciesDetailSchema
-  }));
+  .output(zodTypes.PokemonSpeciesDetailSchema);
 
 const apiV2PokeathlonStatList = oc
   .route({
     method: "GET",
     path: "/api/v2/pokeathlon-stat/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1491,34 +1162,26 @@ const apiV2PokeathlonStatList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedPokeathlonStatSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedPokeathlonStatSummaryListSchema);
 
 const apiV2PokeathlonStatRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokeathlon-stat/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PokeathlonStatDetailSchema
-  }));
+  .output(zodTypes.PokeathlonStatDetailSchema);
 
 const apiV2RegionList = oc
   .route({
     method: "GET",
     path: "/api/v2/region/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1527,34 +1190,26 @@ const apiV2RegionList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedRegionSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedRegionSummaryListSchema);
 
 const apiV2RegionRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/region/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.RegionDetailSchema
-  }));
+  .output(zodTypes.RegionDetailSchema);
 
 const apiV2StatList = oc
   .route({
     method: "GET",
     path: "/api/v2/stat/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1563,34 +1218,26 @@ const apiV2StatList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedStatSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedStatSummaryListSchema);
 
 const apiV2StatRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/stat/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.StatDetailSchema
-  }));
+  .output(zodTypes.StatDetailSchema);
 
 const apiV2SuperContestEffectList = oc
   .route({
     method: "GET",
     path: "/api/v2/super-contest-effect/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1599,34 +1246,26 @@ const apiV2SuperContestEffectList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedSuperContestEffectSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedSuperContestEffectSummaryListSchema);
 
 const apiV2SuperContestEffectRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/super-contest-effect/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.SuperContestEffectDetailSchema
-  }));
+  .output(zodTypes.SuperContestEffectDetailSchema);
 
 const apiV2TypeList = oc
   .route({
     method: "GET",
     path: "/api/v2/type/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1635,34 +1274,26 @@ const apiV2TypeList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedTypeSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedTypeSummaryListSchema);
 
 const apiV2TypeRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/type/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.TypeDetailSchema
-  }));
+  .output(zodTypes.TypeDetailSchema);
 
 const apiV2VersionList = oc
   .route({
     method: "GET",
     path: "/api/v2/version/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1671,34 +1302,26 @@ const apiV2VersionList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedVersionSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedVersionSummaryListSchema);
 
 const apiV2VersionRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/version/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.VersionDetailSchema
-  }));
+  .output(zodTypes.VersionDetailSchema);
 
 const apiV2VersionGroupList = oc
   .route({
     method: "GET",
     path: "/api/v2/version-group/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -1707,44 +1330,33 @@ const apiV2VersionGroupList = oc
       q: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PaginatedVersionGroupSummaryListSchema
-  }));
+  .output(zodTypes.PaginatedVersionGroupSummaryListSchema);
 
 const apiV2VersionGroupRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/version-group/{id}/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.VersionGroupDetailSchema
-  }));
+  .output(zodTypes.VersionGroupDetailSchema);
 
 const apiV2PokemonEncountersRetrieve = oc
   .route({
     method: "GET",
     path: "/api/v2/pokemon/{pokemon_id}/encounters",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       pokemon_id: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ApiV2PokemonEncountersRetrieveResponseSchema
-  }));
+  .output(zodTypes.ApiV2PokemonEncountersRetrieveResponseSchema);
 
 export const contract = oc.router({
   pokemon: {

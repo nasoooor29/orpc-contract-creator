@@ -1,13 +1,18 @@
 import type { JSONSchema, OpenAPISpec, ReferenceObject } from "./types";
 import { isReferenceObject } from "./openapi-parser";
 
+export interface ZodGeneratorOptions {
+  allOutputFieldsRequired?: boolean;
+}
+
 /**
  * Generate Zod schemas from a collection of JSON schemas
  * Uses a custom generator for full control over schema naming
  */
 export async function generateZodSchemas(
   schemas: Map<string, JSONSchema>,
-  spec: OpenAPISpec
+  spec: OpenAPISpec,
+  options: ZodGeneratorOptions = {}
 ): Promise<string> {
   // Collect all schemas including component schemas
   const allSchemas = new Map<string, JSONSchema>();
@@ -30,7 +35,7 @@ export async function generateZodSchemas(
     return `import { z } from "zod";\n\n// No schemas found\nexport {};\n`;
   }
 
-  return generateZodSchemasFromMap(allSchemas);
+  return generateZodSchemasFromMap(allSchemas, options);
 }
 
 /**
@@ -176,7 +181,7 @@ function hasCircularRef(
   return false;
 }
 
-function generateZodSchemasFromMap(schemas: Map<string, JSONSchema>): string {
+function generateZodSchemasFromMap(schemas: Map<string, JSONSchema>, options: ZodGeneratorOptions = {}): string {
   const lines: string[] = [
     `import { z } from "zod";`,
     "",
@@ -204,9 +209,9 @@ function generateZodSchemasFromMap(schemas: Map<string, JSONSchema>): string {
 
     if (isCircular) {
       // Use z.lazy for circular schemas
-      lines.push(`export const ${safeName}Schema: z.ZodType<any> = z.lazy(() => ${jsonSchemaToZod(schema, schemas, name)});`);
+      lines.push(`export const ${safeName}Schema: z.ZodType<any> = z.lazy(() => ${jsonSchemaToZod(schema, schemas, options, name)});`);
     } else {
-      const zodSchema = jsonSchemaToZod(schema, schemas, name);
+      const zodSchema = jsonSchemaToZod(schema, schemas, options, name);
       lines.push(`export const ${safeName}Schema = ${zodSchema};`);
     }
     lines.push(`export type ${safeName} = z.infer<typeof ${safeName}Schema>;`);
@@ -226,9 +231,12 @@ function sanitizeName(name: string): string {
 function jsonSchemaToZod(
   schema: JSONSchema | ReferenceObject | undefined,
   allSchemas: Map<string, JSONSchema>,
+  options: ZodGeneratorOptions = {},
   currentSchemaName?: string,
   depth = 0
 ): string {
+  const { allOutputFieldsRequired = false } = options;
+  
   if (!schema) return "z.unknown()";
 
   if (isReferenceObject(schema)) {
@@ -243,7 +251,7 @@ function jsonSchemaToZod(
   // Handle allOf (intersection)
   if (schema.allOf && schema.allOf.length > 0) {
     if (schema.allOf.length === 1) {
-      return jsonSchemaToZod(schema.allOf[0], allSchemas, currentSchemaName, depth);
+      return jsonSchemaToZod(schema.allOf[0], allSchemas, options, currentSchemaName, depth);
     }
     // For allOf with object schemas, merge them
     const mergedProps: Record<string, JSONSchema | ReferenceObject> = {};
@@ -270,27 +278,27 @@ function jsonSchemaToZod(
     if (Object.keys(mergedProps).length > 0) {
       const props: string[] = [];
       for (const [key, propSchema] of Object.entries(mergedProps)) {
-        const isRequired = mergedRequired.includes(key);
-        let propZod = jsonSchemaToZod(propSchema, allSchemas, currentSchemaName, depth + 1);
+        const isRequired = allOutputFieldsRequired || mergedRequired.includes(key);
+        let propZod = jsonSchemaToZod(propSchema, allSchemas, options, currentSchemaName, depth + 1);
         if (!isRequired) propZod += ".optional()";
         props.push(`  ${sanitizePropertyName(key)}: ${propZod}`);
       }
       return wrapNullable(`z.object({\n${props.join(",\n")}\n})`);
     }
     
-    const zodSchemas = schema.allOf.map((s) => jsonSchemaToZod(s, allSchemas, currentSchemaName, depth));
+    const zodSchemas = schema.allOf.map((s) => jsonSchemaToZod(s, allSchemas, options, currentSchemaName, depth));
     return zodSchemas.reduce((acc, s) => `${acc}.and(${s})`);
   }
 
   // Handle oneOf/anyOf (union)
   if (schema.oneOf && schema.oneOf.length > 0) {
-    const zodSchemas = schema.oneOf.map((s) => jsonSchemaToZod(s, allSchemas, currentSchemaName, depth));
+    const zodSchemas = schema.oneOf.map((s) => jsonSchemaToZod(s, allSchemas, options, currentSchemaName, depth));
     if (zodSchemas.length === 1) return zodSchemas[0]!;
     return `z.union([${zodSchemas.join(", ")}])`;
   }
 
   if (schema.anyOf && schema.anyOf.length > 0) {
-    const zodSchemas = schema.anyOf.map((s) => jsonSchemaToZod(s, allSchemas, currentSchemaName, depth));
+    const zodSchemas = schema.anyOf.map((s) => jsonSchemaToZod(s, allSchemas, options, currentSchemaName, depth));
     if (zodSchemas.length === 1) return zodSchemas[0]!;
     return `z.union([${zodSchemas.join(", ")}])`;
   }
@@ -348,7 +356,7 @@ function jsonSchemaToZod(
 
     case "array": {
       const itemSchema = schema.items
-        ? jsonSchemaToZod(schema.items as JSONSchema, allSchemas, currentSchemaName, depth + 1)
+        ? jsonSchemaToZod(schema.items as JSONSchema, allSchemas, options, currentSchemaName, depth + 1)
         : "z.unknown()";
       return wrapNullable(`z.array(${itemSchema})`);
     }
@@ -357,8 +365,8 @@ function jsonSchemaToZod(
       if (schema.properties) {
         const props: string[] = [];
         for (const [key, propSchema] of Object.entries(schema.properties)) {
-          const isRequired = schema.required?.includes(key) ?? false;
-          let propZod = jsonSchemaToZod(propSchema, allSchemas, currentSchemaName, depth + 1);
+          const isRequired = allOutputFieldsRequired || (schema.required?.includes(key) ?? false);
+          let propZod = jsonSchemaToZod(propSchema, allSchemas, options, currentSchemaName, depth + 1);
           if (!isRequired) propZod += ".optional()";
           props.push(`  ${sanitizePropertyName(key)}: ${propZod}`);
         }
@@ -384,6 +392,7 @@ function jsonSchemaToZod(
         const valueSchema = jsonSchemaToZod(
           schema.additionalProperties as JSONSchema,
           allSchemas,
+          options,
           currentSchemaName,
           depth + 1
         );

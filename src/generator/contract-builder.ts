@@ -19,13 +19,19 @@ function toCamelCase(str: string): string {
     .join("");
 }
 
+export interface ContractGeneratorOptions {
+  allInputFieldsRequired?: boolean;
+  allOutputFieldsRequired?: boolean;
+}
+
 /**
  * Generate the oRPC contract file content using detailed input/output structure
  */
 export function generateContract(
   endpoints: ParsedEndpoint[],
   schemas: Map<string, JSONSchema>,
-  specName: string
+  specName: string,
+  options: ContractGeneratorOptions = {}
 ): string {
   const lines: string[] = [
     `import { oc } from "@orpc/contract";`,
@@ -39,7 +45,7 @@ export function generateContract(
   const contractStructure: Map<string, string[]> = new Map();
 
   for (const endpoint of endpoints) {
-    const endpointCode = generateEndpointContract(endpoint, schemas);
+    const endpointCode = generateEndpointContract(endpoint, schemas, options);
     const varName = toCamelCase(endpoint.operationId);
     
     endpointDeclarations.push(`const ${varName} = ${endpointCode};`);
@@ -81,28 +87,42 @@ export function generateContract(
 
 function generateEndpointContract(
   endpoint: ParsedEndpoint,
-  schemas: Map<string, JSONSchema>
+  schemas: Map<string, JSONSchema>,
+  options: ContractGeneratorOptions = {}
 ): string {
   const parts: string[] = [];
   
   // Route definition with detailed mode
   const routePath = endpoint.path.replace(/{([^}]+)}/g, "{$1}");
+  
+  // Check if output needs detailed structure (multiple responses or no body)
+  const successResponses = endpoint.successResponses.filter((r) => r.schemaName);
+  const needsDetailedOutput = successResponses.length !== 1;
+  
   parts.push(`oc`);
-  parts.push(`.route({
+  if (needsDetailedOutput) {
+    parts.push(`.route({
     method: "${endpoint.method}",
     path: "${routePath}",
     inputStructure: "detailed",
     outputStructure: "detailed"
   })`);
+  } else {
+    parts.push(`.route({
+    method: "${endpoint.method}",
+    path: "${routePath}",
+    inputStructure: "detailed"
+  })`);
+  }
 
   // Input schema (detailed mode: params, query, body, headers)
-  const inputSchema = generateDetailedInputSchema(endpoint, schemas);
+  const inputSchema = generateDetailedInputSchema(endpoint, schemas, options);
   if (inputSchema) {
     parts.push(`.input(${inputSchema})`);
   }
 
-  // Output schema (detailed mode: status, body, headers)
-  const outputSchema = generateDetailedOutputSchema(endpoint, schemas);
+  // Output schema
+  const outputSchema = generateOutputSchema(endpoint, schemas);
   if (outputSchema) {
     parts.push(`.output(${outputSchema})`);
   }
@@ -118,8 +138,10 @@ function generateEndpointContract(
 
 function generateDetailedInputSchema(
   endpoint: ParsedEndpoint,
-  schemas: Map<string, JSONSchema>
+  schemas: Map<string, JSONSchema>,
+  options: ContractGeneratorOptions = {}
 ): string | null {
+  const { allInputFieldsRequired = false } = options;
   const inputParts: string[] = [];
 
   // Params (path parameters)
@@ -137,7 +159,8 @@ function generateDetailedInputSchema(
     const queryProps: string[] = [];
     for (const param of endpoint.queryParams) {
       let zodType = getZodTypeForParam(param, false);
-      if (!param.required) {
+      // Only add .optional() if not in allInputFieldsRequired mode and param is not required
+      if (!allInputFieldsRequired && !param.required) {
         zodType += ".optional()";
       }
       queryProps.push(`${sanitizePropertyName(param.name)}: ${zodType}`);
@@ -148,10 +171,11 @@ function generateDetailedInputSchema(
   // Body (request body)
   if (endpoint.requestBody) {
     const schemaRef = getSchemaReference(endpoint.requestBody.schemaName, schemas);
-    if (endpoint.requestBody.required) {
-      inputParts.push(`body: ${schemaRef}`);
-    } else {
+    // Only add .optional() if not in allInputFieldsRequired mode and body is not required
+    if (!allInputFieldsRequired && !endpoint.requestBody.required) {
       inputParts.push(`body: ${schemaRef}.optional()`);
+    } else {
+      inputParts.push(`body: ${schemaRef}`);
     }
   }
 
@@ -231,14 +255,17 @@ function isEmptySchema(schema: JSONSchema): boolean {
   );
 }
 
-function generateDetailedOutputSchema(
+/**
+ * Generate output schema - simplified for single response, detailed for multiple
+ */
+function generateOutputSchema(
   endpoint: ParsedEndpoint,
   schemas: Map<string, JSONSchema>
 ): string | null {
   const successResponses = endpoint.successResponses.filter((r) => r.schemaName);
 
   if (successResponses.length === 0) {
-    // Even without a body, we might want to return status
+    // Even without a body, we might want to return status (detailed mode)
     if (endpoint.successResponses.length > 0) {
       const status = endpoint.successResponses[0]?.statusCode || 200;
       return `z.object({
@@ -249,16 +276,14 @@ function generateDetailedOutputSchema(
     return null;
   }
 
+  // Single response - return simplified output (just the body schema)
   if (successResponses.length === 1) {
     const response = successResponses[0]!;
     const bodySchema = getSchemaReference(response.schemaName!, schemas);
-    return `z.object({
-    status: z.literal(${response.statusCode}),
-    body: ${bodySchema}
-  })`;
+    return bodySchema;
   }
 
-  // Multiple success responses - create a union with status discriminator
+  // Multiple success responses - create a union with status discriminator (detailed mode)
   const responseSchemas = successResponses.map((r) => {
     const bodySchema = getSchemaReference(r.schemaName!, schemas);
     return `z.object({

@@ -1,141 +1,141 @@
 import { z } from "zod";
 
 export const database_HealthStatsSchema = z.object({
-  idle: z.number().int().optional(),
-  in_use: z.number().int().optional(),
-  max_idle_closed: z.number().int().optional(),
-  max_lifetime_closed: z.number().int().optional(),
-  open_connections: z.number().int().optional(),
-  wait_count: z.number().int().optional(),
-  wait_duration: z.string().optional()
+  idle: z.number().int(),
+  in_use: z.number().int(),
+  max_idle_closed: z.number().int(),
+  max_lifetime_closed: z.number().int(),
+  open_connections: z.number().int(),
+  wait_count: z.number().int(),
+  wait_duration: z.string()
 });
 export type database_HealthStats = z.infer<typeof database_HealthStatsSchema>;
 
 export const database_HealthSchema = z.object({
-  app_version: z.string().optional(),
-  base_url: z.string().optional(),
-  error: z.string().optional(),
-  message: z.string().optional(),
-  stats: database_HealthStatsSchema.optional(),
-  status: z.string().optional()
+  app_version: z.string(),
+  base_url: z.string(),
+  error: z.string(),
+  message: z.string(),
+  stats: database_HealthStatsSchema,
+  status: z.string()
 });
 export type database_Health = z.infer<typeof database_HealthSchema>;
 
 export const models_ClearOldLogsResponseSchema = z.object({
-  before: z.string().optional(),
-  message: z.string().optional(),
-  retention_days: z.number().int().optional()
+  before: z.string(),
+  message: z.string(),
+  retention_days: z.number().int()
 });
 export type models_ClearOldLogsResponse = z.infer<typeof models_ClearOldLogsResponseSchema>;
 
 export const models_CreateRuleRequestSchema = z.object({
   action: z.enum(["accept", "drop"]),
   chain: z.enum(["input", "forward", "output"]),
-  comment: z.string().optional(),
-  port: z.number().int().optional(),
-  protocol: z.enum(["tcp", "udp"]).optional(),
-  source_ip: z.string().optional()
+  comment: z.string(),
+  port: z.number().int(),
+  protocol: z.enum(["tcp", "udp"]),
+  source_ip: z.string()
 });
 export type models_CreateRuleRequest = z.infer<typeof models_CreateRuleRequestSchema>;
 
 export const models_CreateVMRequestSchema = z.object({
-  autostart: z.boolean().optional(),
+  autostart: z.boolean(),
   disk: z.number().int(),
   memory: z.number().int(),
   name: z.string(),
-  os_image: z.string().optional(),
+  os_image: z.string(),
   vcpus: z.number().int()
 });
 export type models_CreateVMRequest = z.infer<typeof models_CreateVMRequestSchema>;
 
 export const models_ErrorRateByServiceSchema = z.object({
-  error_count: z.number().int().optional(),
-  error_rate: z.number().optional(),
-  service_group: z.string().optional(),
-  total_count: z.number().int().optional()
+  error_count: z.number().int(),
+  error_rate: z.number(),
+  service_group: z.string(),
+  total_count: z.number().int()
 });
 export type models_ErrorRateByService = z.infer<typeof models_ErrorRateByServiceSchema>;
 
 export const models_FirewallRuleSchema = z.object({
-  action: z.string().optional(),
-  chain: z.string().optional(),
-  comment: z.string().optional(),
-  handle: z.number().int().optional(),
-  port: z.number().int().optional(),
-  protocol: z.string().optional(),
-  source_ip: z.string().optional()
+  action: z.string(),
+  chain: z.string(),
+  comment: z.string(),
+  handle: z.number().int(),
+  port: z.number().int(),
+  protocol: z.string(),
+  source_ip: z.string()
 });
 export type models_FirewallRule = z.infer<typeof models_FirewallRuleSchema>;
 
 export const models_FirewallStatusSchema = z.object({
-  enabled: z.boolean().optional(),
-  rule_count: z.number().int().optional(),
-  table_name: z.string().optional()
+  enabled: z.boolean(),
+  rule_count: z.number().int(),
+  table_name: z.string()
 });
 export type models_FirewallStatus = z.infer<typeof models_FirewallStatusSchema>;
 
 export const models_LogResponseSchema = z.object({
-  action: z.string().optional(),
-  created_at: z.string().optional(),
-  details: z.string().optional(),
-  id: z.number().int().optional(),
-  level: z.string().optional(),
-  service_group: z.string().optional(),
-  user_id: z.number().int().optional()
+  action: z.string(),
+  created_at: z.string(),
+  details: z.string(),
+  id: z.number().int(),
+  level: z.string(),
+  service_group: z.string(),
+  user_id: z.number().int()
 });
 export type models_LogResponse = z.infer<typeof models_LogResponseSchema>;
 
 export const models_GetLogsResponseSchema = z.object({
-  logs: z.array(models_LogResponseSchema).optional(),
-  page: z.number().int().optional(),
-  page_size: z.number().int().optional(),
-  total: z.number().int().optional(),
-  total_pages: z.number().int().optional()
+  logs: z.array(models_LogResponseSchema),
+  page: z.number().int(),
+  page_size: z.number().int(),
+  total: z.number().int(),
+  total_pages: z.number().int()
 });
 export type models_GetLogsResponse = z.infer<typeof models_GetLogsResponseSchema>;
 
 export const models_HTTPErrorSchema = z.object({
-  message: z.string().optional()
+  message: z.string()
 });
 export type models_HTTPError = z.infer<typeof models_HTTPErrorSchema>;
 
 export const models_ServiceHealthSchema = z.object({
-  error_count: z.number().int().optional(),
-  error_rate: z.number().optional(),
-  service_group: z.string().optional(),
-  status: z.string().optional(),
-  total_count: z.number().int().optional()
+  error_count: z.number().int(),
+  error_rate: z.number(),
+  service_group: z.string(),
+  status: z.string(),
+  total_count: z.number().int()
 });
 export type models_ServiceHealth = z.infer<typeof models_ServiceHealthSchema>;
 
 export const models_HealthMetricsResponseSchema = z.object({
-  alerts: z.array(z.string()).optional(),
-  overall_status: z.string().optional(),
-  period: z.string().optional(),
-  services: z.array(models_ServiceHealthSchema).optional(),
-  timestamp: z.string().optional()
+  alerts: z.array(z.string()),
+  overall_status: z.string(),
+  period: z.string(),
+  services: z.array(models_ServiceHealthSchema),
+  timestamp: z.string()
 });
 export type models_HealthMetricsResponse = z.infer<typeof models_HealthMetricsResponseSchema>;
 
 export const models_LogCountByHourSchema = z.object({
-  hour: z.string().optional(),
-  log_count: z.number().int().optional()
+  hour: z.string(),
+  log_count: z.number().int()
 });
 export type models_LogCountByHour = z.infer<typeof models_LogCountByHourSchema>;
 
 export const models_LogLevelStatsSchema = z.object({
-  count: z.number().int().optional(),
-  level: z.string().optional(),
-  percentage: z.number().optional()
+  count: z.number().int(),
+  level: z.string(),
+  percentage: z.number()
 });
 export type models_LogLevelStats = z.infer<typeof models_LogLevelStatsSchema>;
 
 export const models_LogStatsResponseSchema = z.object({
-  days: z.number().int().optional(),
-  levels: z.array(z.string()).optional(),
-  service_groups: z.array(z.string()).optional(),
-  since: z.string().optional(),
-  total: z.number().int().optional()
+  days: z.number().int(),
+  levels: z.array(z.string()),
+  service_groups: z.array(z.string()),
+  since: z.string(),
+  total: z.number().int()
 });
 export type models_LogStatsResponse = z.infer<typeof models_LogStatsResponseSchema>;
 
@@ -146,36 +146,36 @@ export const models_LoginSchema = z.object({
 export type models_Login = z.infer<typeof models_LoginSchema>;
 
 export const models_MetricsPeriodSchema = z.object({
-  days: z.number().int().optional(),
-  since: z.string().optional(),
-  until: z.string().optional()
+  days: z.number().int(),
+  since: z.string(),
+  until: z.string()
 });
 export type models_MetricsPeriod = z.infer<typeof models_MetricsPeriodSchema>;
 
 export const models_ServiceStatsSchema = z.object({
-  count: z.number().int().optional(),
-  percentage: z.number().optional(),
-  service_group: z.string().optional()
+  count: z.number().int(),
+  percentage: z.number(),
+  service_group: z.string()
 });
 export type models_ServiceStats = z.infer<typeof models_ServiceStatsSchema>;
 
 export const models_MetricsResponseSchema = z.object({
-  error_rate_by_service: z.array(models_ErrorRateByServiceSchema).optional(),
-  log_count_by_hour: z.array(models_LogCountByHourSchema).optional(),
-  log_level_distribution: z.array(models_LogLevelStatsSchema).optional(),
-  period: models_MetricsPeriodSchema.optional(),
-  service_group_distribution: z.array(models_ServiceStatsSchema).optional()
+  error_rate_by_service: z.array(models_ErrorRateByServiceSchema),
+  log_count_by_hour: z.array(models_LogCountByHourSchema),
+  log_level_distribution: z.array(models_LogLevelStatsSchema),
+  period: models_MetricsPeriodSchema,
+  service_group_distribution: z.array(models_ServiceStatsSchema)
 });
 export type models_MetricsResponse = z.infer<typeof models_MetricsResponseSchema>;
 
 export const models_MountPointSchema = z.object({
-  available: z.number().int().optional(),
-  device: z.string().optional(),
-  fs_type: z.string().optional(),
-  path: z.string().optional(),
-  total: z.number().int().optional(),
-  use_percent: z.number().int().optional(),
-  used: z.number().int().optional()
+  available: z.number().int(),
+  device: z.string(),
+  fs_type: z.string(),
+  path: z.string(),
+  total: z.number().int(),
+  use_percent: z.number().int(),
+  used: z.number().int()
 });
 export type models_MountPoint = z.infer<typeof models_MountPointSchema>;
 
@@ -186,117 +186,117 @@ export const models_ReorderRulesRequestSchema = z.object({
 export type models_ReorderRulesRequest = z.infer<typeof models_ReorderRulesRequestSchema>;
 
 export const models_ServiceMetricsResponseSchema = z.object({
-  days: z.number().int().optional(),
-  error_count: z.number().int().optional(),
-  error_rate: z.number().optional(),
-  level_distribution: z.array(models_LogLevelStatsSchema).optional(),
-  service_group: z.string().optional(),
-  since: z.string().optional(),
-  total_logs: z.number().int().optional()
+  days: z.number().int(),
+  error_count: z.number().int(),
+  error_rate: z.number(),
+  level_distribution: z.array(models_LogLevelStatsSchema),
+  service_group: z.string(),
+  since: z.string(),
+  total_logs: z.number().int()
 });
 export type models_ServiceMetricsResponse = z.infer<typeof models_ServiceMetricsResponseSchema>;
 
 export const models_StorageDeviceSchema = z.object({
-  mount_point: z.string().optional(),
-  name: z.string().optional(),
-  size: z.string().optional(),
-  size_bytes: z.number().int().optional(),
-  type: z.string().optional(),
-  usage_percent: z.number().int().optional()
+  mount_point: z.string(),
+  name: z.string(),
+  size: z.string(),
+  size_bytes: z.number().int(),
+  type: z.string(),
+  usage_percent: z.number().int()
 });
 export type models_StorageDevice = z.infer<typeof models_StorageDeviceSchema>;
 
 export const models_VMActionResponseSchema = z.object({
-  message: z.string().optional(),
-  success: z.boolean().optional()
+  message: z.string(),
+  success: z.boolean()
 });
 export type models_VMActionResponse = z.infer<typeof models_VMActionResponseSchema>;
 
 export const models_VirtualMachineSchema = z.object({
-  id: z.number().int().optional(),
-  name: z.string().optional(),
-  uuid: z.string().optional()
+  id: z.number().int(),
+  name: z.string(),
+  uuid: z.string()
 });
 export type models_VirtualMachine = z.infer<typeof models_VirtualMachineSchema>;
 
 export const models_VirtualMachineWithInfoSchema = z.object({
-  cpu_time_ns: z.number().int().optional(),
-  id: z.number().int().optional(),
-  max_mem_kb: z.number().int().optional(),
-  memory_kb: z.number().int().optional(),
-  name: z.string().optional(),
-  state: z.number().int().optional(),
-  uuid: z.string().optional(),
-  vcpus: z.number().int().optional(),
-  vnc_ip: z.string().optional(),
-  vnc_port: z.number().int().optional()
+  cpu_time_ns: z.number().int(),
+  id: z.number().int(),
+  max_mem_kb: z.number().int(),
+  memory_kb: z.number().int(),
+  name: z.string(),
+  state: z.number().int(),
+  uuid: z.string(),
+  vcpus: z.number().int(),
+  vnc_ip: z.string(),
+  vnc_port: z.number().int()
 });
 export type models_VirtualMachineWithInfo = z.infer<typeof models_VirtualMachineWithInfoSchema>;
 
 export const notifications_NotificationSettingSchema = z.object({
-  config: z.string().optional(),
-  created_at: z.string().optional(),
-  enabled: z.boolean().optional(),
-  id: z.number().int().optional(),
-  notify_on_error: z.boolean().optional(),
-  notify_on_info: z.boolean().optional(),
-  notify_on_warn: z.boolean().optional(),
-  provider: z.string().optional(),
-  updated_at: z.string().optional(),
-  webhook_url: z.string().optional()
+  config: z.string(),
+  created_at: z.string(),
+  enabled: z.boolean(),
+  id: z.number().int(),
+  notify_on_error: z.boolean(),
+  notify_on_info: z.boolean(),
+  notify_on_warn: z.boolean(),
+  provider: z.string(),
+  updated_at: z.string(),
+  webhook_url: z.string()
 });
 export type notifications_NotificationSetting = z.infer<typeof notifications_NotificationSettingSchema>;
 
 export const services_NotificationSettingRequestSchema = z.object({
-  config: z.string().optional(),
-  enabled: z.boolean().optional(),
-  notify_on_error: z.boolean().optional(),
-  notify_on_info: z.boolean().optional(),
-  notify_on_warn: z.boolean().optional(),
-  provider: z.string().optional(),
-  webhook_url: z.string().optional()
+  config: z.string(),
+  enabled: z.boolean(),
+  notify_on_error: z.boolean(),
+  notify_on_info: z.boolean(),
+  notify_on_warn: z.boolean(),
+  provider: z.string(),
+  webhook_url: z.string()
 });
 export type services_NotificationSettingRequest = z.infer<typeof services_NotificationSettingRequestSchema>;
 
 export const user_CreateUserParamsSchema = z.object({
-  email: z.string().optional(),
-  password: z.string().optional(),
-  role: z.string().optional(),
-  username: z.string().optional()
+  email: z.string(),
+  password: z.string(),
+  role: z.string(),
+  username: z.string()
 });
 export type user_CreateUserParams = z.infer<typeof user_CreateUserParamsSchema>;
 
 export const user_UserSchema = z.object({
-  created_at: z.string().optional(),
-  email: z.string().optional(),
-  id: z.number().int().optional(),
-  password: z.string().optional(),
-  role: z.string().optional(),
-  updated_at: z.string().optional(),
-  username: z.string().optional()
+  created_at: z.string(),
+  email: z.string(),
+  id: z.number().int(),
+  password: z.string(),
+  role: z.string(),
+  updated_at: z.string(),
+  username: z.string()
 });
 export type user_User = z.infer<typeof user_UserSchema>;
 
 export const user_UserSessionSchema = z.object({
-  created_at: z.string().optional(),
-  id: z.number().int().optional(),
-  session_token: z.string().optional(),
-  updated_at: z.string().optional(),
-  user_id: z.number().int().optional()
+  created_at: z.string(),
+  id: z.number().int(),
+  session_token: z.string(),
+  updated_at: z.string(),
+  user_id: z.number().int()
 });
 export type user_UserSession = z.infer<typeof user_UserSessionSchema>;
 
 export const user_GetUserAndSessionByTokenRowSchema = z.object({
-  user: user_UserSchema.optional(),
-  user_session: user_UserSessionSchema.optional()
+  user: user_UserSchema,
+  user_session: user_UserSessionSchema
 });
 export type user_GetUserAndSessionByTokenRow = z.infer<typeof user_GetUserAndSessionByTokenRowSchema>;
 
 export const user_UpsertUserParamsSchema = z.object({
-  email: z.string().optional(),
-  password: z.string().optional(),
-  role: z.string().optional(),
-  username: z.string().optional()
+  email: z.string(),
+  password: z.string(),
+  role: z.string(),
+  username: z.string()
 });
 export type user_UpsertUserParams = z.infer<typeof user_UpsertUserParamsSchema>;
 
@@ -436,9 +436,9 @@ export const put_users__id__id_paramSchema = z.number().int();
 export type put_users__id__id_param = z.infer<typeof put_users__id__id_paramSchema>;
 
 export const PutUsersIdInputSchema = z.object({
-  email: z.string().optional(),
-  role: z.string().optional(),
-  username: z.string().optional()
+  email: z.string(),
+  role: z.string(),
+  username: z.string()
 });
 export type PutUsersIdInput = z.infer<typeof PutUsersIdInputSchema>;
 
@@ -449,6 +449,6 @@ export const patch_users__id__role_id_paramSchema = z.number().int();
 export type patch_users__id__role_id_param = z.infer<typeof patch_users__id__role_id_paramSchema>;
 
 export const PatchUsersIdRoleInputSchema = z.object({
-  role: z.string().optional()
+  role: z.string()
 });
 export type PatchUsersIdRoleInput = z.infer<typeof PatchUsersIdRoleInputSchema>;

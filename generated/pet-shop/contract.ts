@@ -6,89 +6,68 @@ const addpet = oc
   .route({
     method: "POST",
     path: "/pet",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.PetSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PetSchema
-  }));
+  .output(zodTypes.PetSchema);
 
 const updatepet = oc
   .route({
     method: "PUT",
     path: "/pet",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.PetSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PetSchema
-  }));
+  .output(zodTypes.PetSchema);
 
 const findpetsbystatus = oc
   .route({
     method: "GET",
     path: "/pet/findByStatus",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
       status: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.PetSchema)
-  }));
+  .output(z.array(zodTypes.PetSchema));
 
 const findpetsbytags = oc
   .route({
     method: "GET",
     path: "/pet/findByTags",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
       tags: z.array(z.string())
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.PetSchema)
-  }));
+  .output(z.array(zodTypes.PetSchema));
 
 const getpetbyid = oc
   .route({
     method: "GET",
     path: "/pet/{petId}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       petId: z.coerce.number().int()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PetSchema
-  }));
+  .output(zodTypes.PetSchema);
 
 const updatepetwithform = oc
   .route({
     method: "POST",
     path: "/pet/{petId}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -99,10 +78,7 @@ const updatepetwithform = oc
       status: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PetSchema
-  }));
+  .output(zodTypes.PetSchema);
 
 const deletepet = oc
   .route({
@@ -125,8 +101,7 @@ const uploadfile = oc
   .route({
     method: "POST",
     path: "/pet/{petId}/uploadImage",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -137,54 +112,39 @@ const uploadfile = oc
     }),
     body: zodTypes.UploadFileInputSchema.optional()
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.ApiResponseSchema
-  }));
+  .output(zodTypes.ApiResponseSchema);
 
 const getinventory = oc
   .route({
     method: "GET",
     path: "/store/inventory",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetInventoryResponseSchema
-  }));
+  .output(zodTypes.GetInventoryResponseSchema);
 
 const placeorder = oc
   .route({
     method: "POST",
     path: "/store/order",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.OrderSchema.optional()
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.OrderSchema
-  }));
+  .output(zodTypes.OrderSchema);
 
 const getorderbyid = oc
   .route({
     method: "GET",
     path: "/store/order/{orderId}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       orderId: z.coerce.number().int()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.OrderSchema
-  }));
+  .output(zodTypes.OrderSchema);
 
 const deleteorder = oc
   .route({
@@ -207,38 +167,29 @@ const createuser = oc
   .route({
     method: "POST",
     path: "/user",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.UserSchema.optional()
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.UserSchema
-  }));
+  .output(zodTypes.UserSchema);
 
 const createuserswithlistinput = oc
   .route({
     method: "POST",
     path: "/user/createWithList",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: z.array(zodTypes.UserSchema).optional()
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.UserSchema
-  }));
+  .output(zodTypes.UserSchema);
 
 const loginuser = oc
   .route({
     method: "GET",
     path: "/user/login",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -246,10 +197,7 @@ const loginuser = oc
       password: z.string().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.LoginUserResponseSchema
-  }));
+  .output(zodTypes.LoginUserResponseSchema);
 
 const logoutuser = oc
   .route({
@@ -267,18 +215,14 @@ const getuserbyname = oc
   .route({
     method: "GET",
     path: "/user/{username}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       username: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.UserSchema
-  }));
+  .output(zodTypes.UserSchema);
 
 const updateuser = oc
   .route({

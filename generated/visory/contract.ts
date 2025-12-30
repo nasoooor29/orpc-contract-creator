@@ -6,28 +6,20 @@ const get = oc
   .route({
     method: "GET",
     path: "/",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetResponseSchema
-  }));
+  .output(zodTypes.GetResponseSchema);
 
 const postAuthLogin = oc
   .route({
     method: "POST",
     path: "/auth/login",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.models_LoginSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_GetUserAndSessionByTokenRowSchema
-  }))
+  .output(zodTypes.user_GetUserAndSessionByTokenRowSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -47,13 +39,9 @@ const getAuthLogout = oc
   .route({
     method: "GET",
     path: "/auth/logout",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetAuthLogoutResponseSchema
-  }))
+  .output(zodTypes.GetAuthLogoutResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -67,13 +55,9 @@ const getAuthMe = oc
   .route({
     method: "GET",
     path: "/auth/me",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_GetUserAndSessionByTokenRowSchema
-  }))
+  .output(zodTypes.user_GetUserAndSessionByTokenRowSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -108,16 +92,12 @@ const postAuthRegister = oc
   .route({
     method: "POST",
     path: "/auth/register",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.user_UpsertUserParamsSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_GetUserAndSessionByTokenRowSchema
-  }))
+  .output(zodTypes.user_GetUserAndSessionByTokenRowSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -142,13 +122,9 @@ const getDocsSpec = oc
   .route({
     method: "GET",
     path: "/docs/spec",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetDocsSpecResponseSchema
-  }))
+  .output(zodTypes.GetDocsSpecResponseSchema)
   .errors({
   INTERNAL_SERVER_ERROR: {
     data: zodTypes.models_HTTPErrorSchema
@@ -167,13 +143,9 @@ const getFirewallRules = oc
   .route({
     method: "GET",
     path: "/firewall/rules",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_FirewallRuleSchema)
-  }))
+  .output(z.array(zodTypes.models_FirewallRuleSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -190,16 +162,12 @@ const postFirewallRules = oc
   .route({
     method: "POST",
     path: "/firewall/rules",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.models_CreateRuleRequestSchema
   }))
-  .output(z.object({
-    status: z.literal(201),
-    body: zodTypes.models_FirewallRuleSchema
-  }))
+  .output(zodTypes.models_FirewallRuleSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -219,16 +187,12 @@ const postFirewallRulesReorder = oc
   .route({
     method: "POST",
     path: "/firewall/rules/reorder",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.models_ReorderRulesRequestSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_FirewallRuleSchema)
-  }))
+  .output(z.array(zodTypes.models_FirewallRuleSchema))
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -282,13 +246,9 @@ const getFirewallStatus = oc
   .route({
     method: "GET",
     path: "/firewall/status",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_FirewallStatusSchema
-  }))
+  .output(zodTypes.models_FirewallStatusSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -305,13 +265,9 @@ const getHealth = oc
   .route({
     method: "GET",
     path: "/health",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.database_HealthSchema
-  }))
+  .output(zodTypes.database_HealthSchema)
   .errors({
   INTERNAL_SERVER_ERROR: {
     data: zodTypes.models_HTTPErrorSchema
@@ -322,13 +278,9 @@ const getIso = oc
   .route({
     method: "GET",
     path: "/iso",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetIsoResponseSchema
-  }))
+  .output(zodTypes.GetIsoResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -345,16 +297,12 @@ const postIso = oc
   .route({
     method: "POST",
     path: "/iso",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.PostIsoInputSchema
   }))
-  .output(z.object({
-    status: z.literal(201),
-    body: zodTypes.PostIsoResponseSchema
-  }))
+  .output(zodTypes.PostIsoResponseSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -374,18 +322,14 @@ const getIsoFilename = oc
   .route({
     method: "GET",
     path: "/iso/{filename}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       filename: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetIsoFilenameResponseSchema
-  }))
+  .output(zodTypes.GetIsoFilenameResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -405,18 +349,14 @@ const deleteIsoFilename = oc
   .route({
     method: "DELETE",
     path: "/iso/{filename}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       filename: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.DeleteIsoFilenameResponseSchema
-  }))
+  .output(zodTypes.DeleteIsoFilenameResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -436,18 +376,14 @@ const getIsoFilenameDownload = oc
   .route({
     method: "GET",
     path: "/iso/{filename}/download",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       filename: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.GetIsoFilenameDownloadResponseSchema
-  }))
+  .output(zodTypes.GetIsoFilenameDownloadResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -467,8 +403,7 @@ const getLogs = oc
   .route({
     method: "GET",
     path: "/logs",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
@@ -479,10 +414,7 @@ const getLogs = oc
       days: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_GetLogsResponseSchema
-  }))
+  .output(zodTypes.models_GetLogsResponseSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -502,18 +434,14 @@ const deleteLogsCleanup = oc
   .route({
     method: "DELETE",
     path: "/logs/cleanup",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
       days: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_ClearOldLogsResponseSchema
-  }))
+  .output(zodTypes.models_ClearOldLogsResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -530,18 +458,14 @@ const getLogsStats = oc
   .route({
     method: "GET",
     path: "/logs/stats",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
       days: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_LogStatsResponseSchema
-  }))
+  .output(zodTypes.models_LogStatsResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -558,18 +482,14 @@ const getMetrics = oc
   .route({
     method: "GET",
     path: "/metrics",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     query: z.object({
       days: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_MetricsResponseSchema
-  }))
+  .output(zodTypes.models_MetricsResponseSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -589,13 +509,9 @@ const getMetricsHealth = oc
   .route({
     method: "GET",
     path: "/metrics/health",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_HealthMetricsResponseSchema
-  }))
+  .output(zodTypes.models_HealthMetricsResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -612,8 +528,7 @@ const getMetricsService = oc
   .route({
     method: "GET",
     path: "/metrics/{service}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -623,10 +538,7 @@ const getMetricsService = oc
       days: z.number().int().optional()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_ServiceMetricsResponseSchema
-  }))
+  .output(zodTypes.models_ServiceMetricsResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -643,13 +555,9 @@ const getQemuVirtualMachines = oc
   .route({
     method: "GET",
     path: "/qemu/virtual-machines",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_VirtualMachineSchema)
-  }))
+  .output(z.array(zodTypes.models_VirtualMachineSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -666,16 +574,12 @@ const postQemuVirtualMachines = oc
   .route({
     method: "POST",
     path: "/qemu/virtual-machines",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.models_CreateVMRequestSchema
   }))
-  .output(z.object({
-    status: z.literal(201),
-    body: zodTypes.models_VirtualMachineSchema
-  }))
+  .output(zodTypes.models_VirtualMachineSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -695,13 +599,9 @@ const getQemuVirtualMachinesInfo = oc
   .route({
     method: "GET",
     path: "/qemu/virtual-machines/info",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_VirtualMachineWithInfoSchema)
-  }))
+  .output(z.array(zodTypes.models_VirtualMachineWithInfoSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -718,18 +618,14 @@ const getQemuVirtualMachinesUuid = oc
   .route({
     method: "GET",
     path: "/qemu/virtual-machines/{uuid}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       uuid: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_VirtualMachineSchema
-  }))
+  .output(zodTypes.models_VirtualMachineSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -762,18 +658,14 @@ const getQemuVirtualMachinesUuidInfo = oc
   .route({
     method: "GET",
     path: "/qemu/virtual-machines/{uuid}/info",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       uuid: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_VirtualMachineWithInfoSchema
-  }))
+  .output(zodTypes.models_VirtualMachineWithInfoSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -793,18 +685,14 @@ const postQemuVirtualMachinesUuidReboot = oc
   .route({
     method: "POST",
     path: "/qemu/virtual-machines/{uuid}/reboot",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       uuid: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_VMActionResponseSchema
-  }))
+  .output(zodTypes.models_VMActionResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -824,18 +712,14 @@ const postQemuVirtualMachinesUuidShutdown = oc
   .route({
     method: "POST",
     path: "/qemu/virtual-machines/{uuid}/shutdown",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       uuid: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_VMActionResponseSchema
-  }))
+  .output(zodTypes.models_VMActionResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -855,18 +739,14 @@ const postQemuVirtualMachinesUuidStart = oc
   .route({
     method: "POST",
     path: "/qemu/virtual-machines/{uuid}/start",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       uuid: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.models_VMActionResponseSchema
-  }))
+  .output(zodTypes.models_VMActionResponseSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -886,13 +766,9 @@ const getSettingsNotifications = oc
   .route({
     method: "GET",
     path: "/settings/notifications",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.notifications_NotificationSettingSchema)
-  }))
+  .output(z.array(zodTypes.notifications_NotificationSettingSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -909,16 +785,12 @@ const postSettingsNotifications = oc
   .route({
     method: "POST",
     path: "/settings/notifications",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.services_NotificationSettingRequestSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.notifications_NotificationSettingSchema
-  }))
+  .output(zodTypes.notifications_NotificationSettingSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -938,18 +810,14 @@ const getSettingsNotificationsProvider = oc
   .route({
     method: "GET",
     path: "/settings/notifications/{provider}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       provider: z.string()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.notifications_NotificationSettingSchema
-  }))
+  .output(zodTypes.notifications_NotificationSettingSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -997,8 +865,7 @@ const postSettingsNotificationsProviderTest = oc
   .route({
     method: "POST",
     path: "/settings/notifications/{provider}/test",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -1006,10 +873,7 @@ const postSettingsNotificationsProviderTest = oc
     }),
     body: zodTypes.PostSettingsNotificationsProviderTestInputSchema.optional()
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.PostSettingsNotificationsProviderTestResponseSchema
-  }))
+  .output(zodTypes.PostSettingsNotificationsProviderTestResponseSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1029,13 +893,9 @@ const getStorageDevices = oc
   .route({
     method: "GET",
     path: "/storage/devices",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_StorageDeviceSchema)
-  }))
+  .output(z.array(zodTypes.models_StorageDeviceSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1052,13 +912,9 @@ const getStorageMountPoints = oc
   .route({
     method: "GET",
     path: "/storage/mount-points",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.models_MountPointSchema)
-  }))
+  .output(z.array(zodTypes.models_MountPointSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1075,13 +931,9 @@ const getUsers = oc
   .route({
     method: "GET",
     path: "/users",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
-  .output(z.object({
-    status: z.literal(200),
-    body: z.array(zodTypes.user_UserSchema)
-  }))
+  .output(z.array(zodTypes.user_UserSchema))
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1098,16 +950,12 @@ const postUsers = oc
   .route({
     method: "POST",
     path: "/users",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     body: zodTypes.user_CreateUserParamsSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_UserSchema
-  }))
+  .output(zodTypes.user_UserSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1130,18 +978,14 @@ const getUsersId = oc
   .route({
     method: "GET",
     path: "/users/{id}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
       id: z.coerce.number().int()
     })
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_UserSchema
-  }))
+  .output(zodTypes.user_UserSchema)
   .errors({
   UNAUTHORIZED: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1161,8 +1005,7 @@ const putUsersId = oc
   .route({
     method: "PUT",
     path: "/users/{id}",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -1170,10 +1013,7 @@ const putUsersId = oc
     }),
     body: zodTypes.PutUsersIdInputSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_UserSchema
-  }))
+  .output(zodTypes.user_UserSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema
@@ -1221,8 +1061,7 @@ const patchUsersIdRole = oc
   .route({
     method: "PATCH",
     path: "/users/{id}/role",
-    inputStructure: "detailed",
-    outputStructure: "detailed"
+    inputStructure: "detailed"
   })
   .input(z.object({
     params: z.object({
@@ -1230,10 +1069,7 @@ const patchUsersIdRole = oc
     }),
     body: zodTypes.PatchUsersIdRoleInputSchema
   }))
-  .output(z.object({
-    status: z.literal(200),
-    body: zodTypes.user_UserSchema
-  }))
+  .output(zodTypes.user_UserSchema)
   .errors({
   BAD_REQUEST: {
     data: zodTypes.models_HTTPErrorSchema

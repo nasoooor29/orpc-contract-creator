@@ -53,7 +53,7 @@ export type AbilityFlavorText = z.infer<typeof AbilityFlavorTextSchema>;
 export const AbilityDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  is_main_series: z.boolean().optional(),
+  is_main_series: z.boolean(),
   generation: GenerationSummarySchema,
   names: z.array(AbilityNameSchema),
   effect_entries: z.array(AbilityEffectTextSchema),
@@ -107,8 +107,8 @@ export const BerryDetailSchema = z.object({
   flavors: z.array(z.object({
   potency: z.number().int(),
   flavor: z.object({
-  name: z.string().optional(),
-  url: z.string().url().optional()
+  name: z.string(),
+  url: z.string().url()
 })
 })),
   item: ItemSummarySchema,
@@ -154,8 +154,8 @@ export const BerryFlavorDetailSchema = z.object({
   berries: z.array(z.object({
   potency: z.number().int(),
   berry: z.object({
-  name: z.string().optional(),
-  url: z.string().url().optional()
+  name: z.string(),
+  url: z.string().url()
 })
 })),
   contest_type: ContestTypeSummarySchema,
@@ -170,7 +170,7 @@ export const BerryFlavorSummarySchema = z.object({
 export type BerryFlavorSummary = z.infer<typeof BerryFlavorSummarySchema>;
 
 export const CharacteristicDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type CharacteristicDescription = z.infer<typeof CharacteristicDescriptionSchema>;
@@ -247,8 +247,8 @@ export const EggGroupDetailSchema = z.object({
   name: z.string().max(200),
   names: z.array(EggGroupNameSchema),
   pokemon_species: z.array(z.object({
-  name: z.string().optional(),
-  url: z.string().url().optional()
+  name: z.string(),
+  url: z.string().url()
 }))
 });
 export type EggGroupDetail = z.infer<typeof EggGroupDetailSchema>;
@@ -308,7 +308,7 @@ export type EncounterMethodName = z.infer<typeof EncounterMethodNameSchema>;
 export const EncounterMethodDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  order: z.number().int().optional(),
+  order: z.number().int(),
   names: z.array(EncounterMethodNameSchema)
 });
 export type EncounterMethodDetail = z.infer<typeof EncounterMethodDetailSchema>;
@@ -470,7 +470,7 @@ export const GenerationDetailSchema = z.object({
 export type GenerationDetail = z.infer<typeof GenerationDetailSchema>;
 
 export const GrowthRateDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type GrowthRateDescription = z.infer<typeof GrowthRateDescriptionSchema>;
@@ -492,7 +492,7 @@ export const GrowthRateSummarySchema = z.object({
 export type GrowthRateSummary = z.infer<typeof GrowthRateSummarySchema>;
 
 export const ItemAttributeDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type ItemAttributeDescription = z.infer<typeof ItemAttributeDescriptionSchema>;
@@ -583,8 +583,8 @@ export type ItemName = z.infer<typeof ItemNameSchema>;
 export const ItemDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  cost: z.number().int().optional(),
-  fling_power: z.number().int().optional(),
+  cost: z.number().int(),
+  fling_power: z.number().int(),
   fling_effect: ItemFlingEffectSummarySchema,
   attributes: z.array(z.object({
   name: z.string(),
@@ -661,7 +661,7 @@ export type LanguageName = z.infer<typeof LanguageNameSchema>;
 export const LanguageDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  official: z.boolean().optional(),
+  official: z.boolean(),
   iso639: z.string().max(10),
   iso3166: z.string().max(2),
   names: z.array(LanguageNameSchema)
@@ -716,7 +716,7 @@ export const LocationAreaDetailSchema = z.object({
   condition_values: z.object({
   name: z.string(),
   url: z.string().url()
-}).optional(),
+}),
   chance: z.number().int(),
   method: z.object({
   name: z.string(),
@@ -789,9 +789,9 @@ export const MoveBattleStyleSummarySchema = z.object({
 export type MoveBattleStyleSummary = z.infer<typeof MoveBattleStyleSummarySchema>;
 
 export const MoveChangeSchema = z.object({
-  accuracy: z.number().int().optional(),
-  power: z.number().int().optional(),
-  pp: z.number().int().optional(),
+  accuracy: z.number().int(),
+  power: z.number().int(),
+  pp: z.number().int(),
   effect_chance: z.number().int(),
   effect_entries: z.array(z.object({
   effect: z.string(),
@@ -807,7 +807,7 @@ export const MoveChangeSchema = z.object({
 export type MoveChange = z.infer<typeof MoveChangeSchema>;
 
 export const MoveDamageClassDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type MoveDamageClassDescription = z.infer<typeof MoveDamageClassDescriptionSchema>;
@@ -848,16 +848,16 @@ export type MoveMetaCategorySummary = z.infer<typeof MoveMetaCategorySummarySche
 export const MoveMetaSchema = z.object({
   ailment: MoveMetaAilmentSummarySchema,
   category: MoveMetaCategorySummarySchema,
-  min_hits: z.number().int().optional(),
-  max_hits: z.number().int().optional(),
-  min_turns: z.number().int().optional(),
-  max_turns: z.number().int().optional(),
-  drain: z.number().int().optional(),
-  healing: z.number().int().optional(),
-  crit_rate: z.number().int().optional(),
-  ailment_chance: z.number().int().optional(),
-  flinch_chance: z.number().int().optional(),
-  stat_chance: z.number().int().optional()
+  min_hits: z.number().int(),
+  max_hits: z.number().int(),
+  min_turns: z.number().int(),
+  max_turns: z.number().int(),
+  drain: z.number().int(),
+  healing: z.number().int(),
+  crit_rate: z.number().int(),
+  ailment_chance: z.number().int(),
+  flinch_chance: z.number().int(),
+  stat_chance: z.number().int()
 });
 export type MoveMeta = z.infer<typeof MoveMetaSchema>;
 
@@ -888,11 +888,11 @@ export type MoveFlavorText = z.infer<typeof MoveFlavorTextSchema>;
 export const MoveDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  accuracy: z.number().int().optional(),
+  accuracy: z.number().int(),
   effect_chance: z.number().int(),
-  pp: z.number().int().optional(),
-  priority: z.number().int().optional(),
-  power: z.number().int().optional(),
+  pp: z.number().int(),
+  priority: z.number().int(),
+  power: z.number().int(),
   contest_combos: z.object({
   normal: z.object({
   use_before: z.array(z.object({
@@ -971,7 +971,7 @@ export const MoveDetailSchema = z.object({
 export type MoveDetail = z.infer<typeof MoveDetailSchema>;
 
 export const MoveLearnMethodDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type MoveLearnMethodDescription = z.infer<typeof MoveLearnMethodDescriptionSchema>;
@@ -1018,7 +1018,7 @@ export const MoveMetaAilmentDetailSchema = z.object({
 export type MoveMetaAilmentDetail = z.infer<typeof MoveMetaAilmentDetailSchema>;
 
 export const MoveMetaCategoryDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type MoveMetaCategoryDescription = z.infer<typeof MoveMetaCategoryDescriptionSchema>;
@@ -1035,7 +1035,7 @@ export const MoveMetaCategoryDetailSchema = z.object({
 export type MoveMetaCategoryDetail = z.infer<typeof MoveMetaCategoryDetailSchema>;
 
 export const MoveTargetDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type MoveTargetDescription = z.infer<typeof MoveTargetDescriptionSchema>;
@@ -1095,266 +1095,266 @@ export const NatureSummarySchema = z.object({
 export type NatureSummary = z.infer<typeof NatureSummarySchema>;
 
 export const PaginatedAbilitySummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(AbilitySummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(AbilitySummarySchema)
 });
 export type PaginatedAbilitySummaryList = z.infer<typeof PaginatedAbilitySummaryListSchema>;
 
 export const PaginatedBerryFirmnessSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(BerryFirmnessSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(BerryFirmnessSummarySchema)
 });
 export type PaginatedBerryFirmnessSummaryList = z.infer<typeof PaginatedBerryFirmnessSummaryListSchema>;
 
 export const PaginatedBerryFlavorSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(BerryFlavorSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(BerryFlavorSummarySchema)
 });
 export type PaginatedBerryFlavorSummaryList = z.infer<typeof PaginatedBerryFlavorSummaryListSchema>;
 
 export const PaginatedBerrySummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(BerrySummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(BerrySummarySchema)
 });
 export type PaginatedBerrySummaryList = z.infer<typeof PaginatedBerrySummaryListSchema>;
 
 export const PaginatedCharacteristicSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(CharacteristicSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(CharacteristicSummarySchema)
 });
 export type PaginatedCharacteristicSummaryList = z.infer<typeof PaginatedCharacteristicSummaryListSchema>;
 
 export const PaginatedContestEffectSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ContestEffectSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ContestEffectSummarySchema)
 });
 export type PaginatedContestEffectSummaryList = z.infer<typeof PaginatedContestEffectSummaryListSchema>;
 
 export const PaginatedContestTypeSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ContestTypeSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ContestTypeSummarySchema)
 });
 export type PaginatedContestTypeSummaryList = z.infer<typeof PaginatedContestTypeSummaryListSchema>;
 
 export const PaginatedEggGroupSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EggGroupSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EggGroupSummarySchema)
 });
 export type PaginatedEggGroupSummaryList = z.infer<typeof PaginatedEggGroupSummaryListSchema>;
 
 export const PaginatedEncounterConditionSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EncounterConditionSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EncounterConditionSummarySchema)
 });
 export type PaginatedEncounterConditionSummaryList = z.infer<typeof PaginatedEncounterConditionSummaryListSchema>;
 
 export const PaginatedEncounterConditionValueSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EncounterConditionValueSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EncounterConditionValueSummarySchema)
 });
 export type PaginatedEncounterConditionValueSummaryList = z.infer<typeof PaginatedEncounterConditionValueSummaryListSchema>;
 
 export const PaginatedEncounterMethodSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EncounterMethodSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EncounterMethodSummarySchema)
 });
 export type PaginatedEncounterMethodSummaryList = z.infer<typeof PaginatedEncounterMethodSummaryListSchema>;
 
 export const PaginatedEvolutionChainSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EvolutionChainSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EvolutionChainSummarySchema)
 });
 export type PaginatedEvolutionChainSummaryList = z.infer<typeof PaginatedEvolutionChainSummaryListSchema>;
 
 export const PaginatedEvolutionTriggerSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(EvolutionTriggerSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(EvolutionTriggerSummarySchema)
 });
 export type PaginatedEvolutionTriggerSummaryList = z.infer<typeof PaginatedEvolutionTriggerSummaryListSchema>;
 
 export const PaginatedGenderSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(GenderSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(GenderSummarySchema)
 });
 export type PaginatedGenderSummaryList = z.infer<typeof PaginatedGenderSummaryListSchema>;
 
 export const PaginatedGenerationSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(GenerationSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(GenerationSummarySchema)
 });
 export type PaginatedGenerationSummaryList = z.infer<typeof PaginatedGenerationSummaryListSchema>;
 
 export const PaginatedGrowthRateSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(GrowthRateSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(GrowthRateSummarySchema)
 });
 export type PaginatedGrowthRateSummaryList = z.infer<typeof PaginatedGrowthRateSummaryListSchema>;
 
 export const PaginatedItemAttributeSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ItemAttributeSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ItemAttributeSummarySchema)
 });
 export type PaginatedItemAttributeSummaryList = z.infer<typeof PaginatedItemAttributeSummaryListSchema>;
 
 export const PaginatedItemCategorySummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ItemCategorySummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ItemCategorySummarySchema)
 });
 export type PaginatedItemCategorySummaryList = z.infer<typeof PaginatedItemCategorySummaryListSchema>;
 
 export const PaginatedItemFlingEffectSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ItemFlingEffectSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ItemFlingEffectSummarySchema)
 });
 export type PaginatedItemFlingEffectSummaryList = z.infer<typeof PaginatedItemFlingEffectSummaryListSchema>;
 
 export const PaginatedItemPocketSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ItemPocketSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ItemPocketSummarySchema)
 });
 export type PaginatedItemPocketSummaryList = z.infer<typeof PaginatedItemPocketSummaryListSchema>;
 
 export const PaginatedItemSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(ItemSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(ItemSummarySchema)
 });
 export type PaginatedItemSummaryList = z.infer<typeof PaginatedItemSummaryListSchema>;
 
 export const PaginatedLanguageSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(LanguageSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(LanguageSummarySchema)
 });
 export type PaginatedLanguageSummaryList = z.infer<typeof PaginatedLanguageSummaryListSchema>;
 
 export const PaginatedLocationAreaSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(LocationAreaSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(LocationAreaSummarySchema)
 });
 export type PaginatedLocationAreaSummaryList = z.infer<typeof PaginatedLocationAreaSummaryListSchema>;
 
 export const PaginatedLocationSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(LocationSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(LocationSummarySchema)
 });
 export type PaginatedLocationSummaryList = z.infer<typeof PaginatedLocationSummaryListSchema>;
 
 export const PaginatedMachineSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MachineSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MachineSummarySchema)
 });
 export type PaginatedMachineSummaryList = z.infer<typeof PaginatedMachineSummaryListSchema>;
 
 export const PaginatedMoveBattleStyleSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveBattleStyleSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveBattleStyleSummarySchema)
 });
 export type PaginatedMoveBattleStyleSummaryList = z.infer<typeof PaginatedMoveBattleStyleSummaryListSchema>;
 
 export const PaginatedMoveDamageClassSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveDamageClassSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveDamageClassSummarySchema)
 });
 export type PaginatedMoveDamageClassSummaryList = z.infer<typeof PaginatedMoveDamageClassSummaryListSchema>;
 
 export const PaginatedMoveLearnMethodSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveLearnMethodSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveLearnMethodSummarySchema)
 });
 export type PaginatedMoveLearnMethodSummaryList = z.infer<typeof PaginatedMoveLearnMethodSummaryListSchema>;
 
 export const PaginatedMoveMetaAilmentSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveMetaAilmentSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveMetaAilmentSummarySchema)
 });
 export type PaginatedMoveMetaAilmentSummaryList = z.infer<typeof PaginatedMoveMetaAilmentSummaryListSchema>;
 
 export const PaginatedMoveMetaCategorySummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveMetaCategorySummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveMetaCategorySummarySchema)
 });
 export type PaginatedMoveMetaCategorySummaryList = z.infer<typeof PaginatedMoveMetaCategorySummaryListSchema>;
 
 export const PaginatedMoveSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveSummarySchema)
 });
 export type PaginatedMoveSummaryList = z.infer<typeof PaginatedMoveSummaryListSchema>;
 
 export const PaginatedMoveTargetSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(MoveTargetSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(MoveTargetSummarySchema)
 });
 export type PaginatedMoveTargetSummaryList = z.infer<typeof PaginatedMoveTargetSummaryListSchema>;
 
 export const PaginatedNatureSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(NatureSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(NatureSummarySchema)
 });
 export type PaginatedNatureSummaryList = z.infer<typeof PaginatedNatureSummaryListSchema>;
 
@@ -1365,10 +1365,10 @@ export const PalParkAreaSummarySchema = z.object({
 export type PalParkAreaSummary = z.infer<typeof PalParkAreaSummarySchema>;
 
 export const PaginatedPalParkAreaSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PalParkAreaSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PalParkAreaSummarySchema)
 });
 export type PaginatedPalParkAreaSummaryList = z.infer<typeof PaginatedPalParkAreaSummaryListSchema>;
 
@@ -1379,10 +1379,10 @@ export const PokeathlonStatSummarySchema = z.object({
 export type PokeathlonStatSummary = z.infer<typeof PokeathlonStatSummarySchema>;
 
 export const PaginatedPokeathlonStatSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokeathlonStatSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokeathlonStatSummarySchema)
 });
 export type PaginatedPokeathlonStatSummaryList = z.infer<typeof PaginatedPokeathlonStatSummaryListSchema>;
 
@@ -1393,10 +1393,10 @@ export const PokedexSummarySchema = z.object({
 export type PokedexSummary = z.infer<typeof PokedexSummarySchema>;
 
 export const PaginatedPokedexSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokedexSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokedexSummarySchema)
 });
 export type PaginatedPokedexSummaryList = z.infer<typeof PaginatedPokedexSummaryListSchema>;
 
@@ -1407,10 +1407,10 @@ export const PokemonColorSummarySchema = z.object({
 export type PokemonColorSummary = z.infer<typeof PokemonColorSummarySchema>;
 
 export const PaginatedPokemonColorSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonColorSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonColorSummarySchema)
 });
 export type PaginatedPokemonColorSummaryList = z.infer<typeof PaginatedPokemonColorSummaryListSchema>;
 
@@ -1421,10 +1421,10 @@ export const PokemonFormSummarySchema = z.object({
 export type PokemonFormSummary = z.infer<typeof PokemonFormSummarySchema>;
 
 export const PaginatedPokemonFormSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonFormSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonFormSummarySchema)
 });
 export type PaginatedPokemonFormSummaryList = z.infer<typeof PaginatedPokemonFormSummaryListSchema>;
 
@@ -1435,10 +1435,10 @@ export const PokemonHabitatSummarySchema = z.object({
 export type PokemonHabitatSummary = z.infer<typeof PokemonHabitatSummarySchema>;
 
 export const PaginatedPokemonHabitatSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonHabitatSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonHabitatSummarySchema)
 });
 export type PaginatedPokemonHabitatSummaryList = z.infer<typeof PaginatedPokemonHabitatSummaryListSchema>;
 
@@ -1449,18 +1449,18 @@ export const PokemonShapeSummarySchema = z.object({
 export type PokemonShapeSummary = z.infer<typeof PokemonShapeSummarySchema>;
 
 export const PaginatedPokemonShapeSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonShapeSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonShapeSummarySchema)
 });
 export type PaginatedPokemonShapeSummaryList = z.infer<typeof PaginatedPokemonShapeSummaryListSchema>;
 
 export const PaginatedPokemonSpeciesSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonSpeciesSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonSpeciesSummarySchema)
 });
 export type PaginatedPokemonSpeciesSummaryList = z.infer<typeof PaginatedPokemonSpeciesSummaryListSchema>;
 
@@ -1471,50 +1471,50 @@ export const PokemonSummarySchema = z.object({
 export type PokemonSummary = z.infer<typeof PokemonSummarySchema>;
 
 export const PaginatedPokemonSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(PokemonSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(PokemonSummarySchema)
 });
 export type PaginatedPokemonSummaryList = z.infer<typeof PaginatedPokemonSummaryListSchema>;
 
 export const PaginatedRegionSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(RegionSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(RegionSummarySchema)
 });
 export type PaginatedRegionSummaryList = z.infer<typeof PaginatedRegionSummaryListSchema>;
 
 export const PaginatedStatSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(StatSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(StatSummarySchema)
 });
 export type PaginatedStatSummaryList = z.infer<typeof PaginatedStatSummaryListSchema>;
 
 export const PaginatedSuperContestEffectSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(SuperContestEffectSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(SuperContestEffectSummarySchema)
 });
 export type PaginatedSuperContestEffectSummaryList = z.infer<typeof PaginatedSuperContestEffectSummaryListSchema>;
 
 export const PaginatedTypeSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(TypeSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(TypeSummarySchema)
 });
 export type PaginatedTypeSummaryList = z.infer<typeof PaginatedTypeSummaryListSchema>;
 
 export const PaginatedVersionGroupSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(VersionGroupSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(VersionGroupSummarySchema)
 });
 export type PaginatedVersionGroupSummaryList = z.infer<typeof PaginatedVersionGroupSummaryListSchema>;
 
@@ -1525,10 +1525,10 @@ export const VersionSummarySchema = z.object({
 export type VersionSummary = z.infer<typeof VersionSummarySchema>;
 
 export const PaginatedVersionSummaryListSchema = z.object({
-  count: z.number().int().optional(),
-  next: z.string().url().nullable().optional(),
-  previous: z.string().url().nullable().optional(),
-  results: z.array(VersionSummarySchema).optional()
+  count: z.number().int(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(VersionSummarySchema)
 });
 export type PaginatedVersionSummaryList = z.infer<typeof PaginatedVersionSummaryListSchema>;
 
@@ -1583,7 +1583,7 @@ export const PokeathlonStatDetailSchema = z.object({
 export type PokeathlonStatDetail = z.infer<typeof PokeathlonStatDetailSchema>;
 
 export const PokedexDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type PokedexDescription = z.infer<typeof PokedexDescriptionSchema>;
@@ -1597,7 +1597,7 @@ export type PokedexName = z.infer<typeof PokedexNameSchema>;
 export const PokedexDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  is_main_series: z.boolean().optional(),
+  is_main_series: z.boolean(),
   descriptions: z.array(PokedexDescriptionSchema),
   names: z.array(PokedexNameSchema),
   pokemon_entries: z.array(z.object({
@@ -1645,11 +1645,11 @@ export type PokemonStat = z.infer<typeof PokemonStatSchema>;
 export const PokemonDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  base_experience: z.number().int().optional(),
-  height: z.number().int().optional(),
-  is_default: z.boolean().optional(),
-  order: z.number().int().optional(),
-  weight: z.number().int().optional(),
+  base_experience: z.number().int(),
+  height: z.number().int(),
+  is_default: z.boolean(),
+  order: z.number().int(),
+  weight: z.number().int(),
   abilities: z.array(z.object({
   ability: z.object({
   name: z.string(),
@@ -1707,7 +1707,7 @@ export const PokemonDetailSchema = z.object({
 })),
   species: PokemonSpeciesSummarySchema,
   sprites: z.object({
-  front_default: z.string().url().optional()
+  front_default: z.string().url()
 }).passthrough(),
   cries: z.object({
   latest: z.string().url(),
@@ -1746,15 +1746,15 @@ export type PokemonDexEntry = z.infer<typeof PokemonDexEntrySchema>;
 export const PokemonFormDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  order: z.number().int().optional(),
-  form_order: z.number().int().optional(),
-  is_default: z.boolean().optional(),
-  is_battle_only: z.boolean().optional(),
-  is_mega: z.boolean().optional(),
+  order: z.number().int(),
+  form_order: z.number().int(),
+  is_default: z.boolean(),
+  is_battle_only: z.boolean(),
+  is_mega: z.boolean(),
   form_name: z.string().max(30),
   pokemon: PokemonSummarySchema,
   sprites: z.object({
-  default: z.string().url().optional()
+  default: z.string().url()
 }).passthrough(),
   version_group: VersionGroupSummarySchema,
   form_names: z.array(z.object({
@@ -1814,7 +1814,7 @@ export const PokemonShapeDetailSchema = z.object({
 export type PokemonShapeDetail = z.infer<typeof PokemonShapeDetailSchema>;
 
 export const PokemonSpeciesDescriptionSchema = z.object({
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000),
   language: LanguageSummarySchema
 });
 export type PokemonSpeciesDescription = z.infer<typeof PokemonSpeciesDescriptionSchema>;
@@ -1829,16 +1829,16 @@ export type PokemonSpeciesFlavorText = z.infer<typeof PokemonSpeciesFlavorTextSc
 export const PokemonSpeciesDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  order: z.number().int().optional(),
-  gender_rate: z.number().int().optional(),
-  capture_rate: z.number().int().optional(),
-  base_happiness: z.number().int().optional(),
-  is_baby: z.boolean().optional(),
-  is_legendary: z.boolean().optional(),
-  is_mythical: z.boolean().optional(),
-  hatch_counter: z.number().int().optional(),
-  has_gender_differences: z.boolean().optional(),
-  forms_switchable: z.boolean().optional(),
+  order: z.number().int(),
+  gender_rate: z.number().int(),
+  capture_rate: z.number().int(),
+  base_happiness: z.number().int(),
+  is_baby: z.boolean(),
+  is_legendary: z.boolean(),
+  is_mythical: z.boolean(),
+  hatch_counter: z.number().int(),
+  has_gender_differences: z.boolean(),
+  forms_switchable: z.boolean(),
   growth_rate: GrowthRateSummarySchema,
   pokedex_numbers: z.array(PokemonDexEntrySchema),
   egg_groups: z.array(z.object({
@@ -1915,7 +1915,7 @@ export const StatDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
   game_index: z.number().int(),
-  is_battle_only: z.boolean().optional(),
+  is_battle_only: z.boolean(),
   affecting_moves: z.object({
   increase: z.array(z.object({
   change: z.number().int(),
@@ -2034,15 +2034,15 @@ export const TypeDetailSchema = z.object({
   move_damage_class: MoveDamageClassSummarySchema,
   names: z.array(AbilityNameSchema),
   pokemon: z.array(z.object({
-  slot: z.number().int().optional(),
+  slot: z.number().int(),
   pokemon: z.object({
-  name: z.string().optional(),
-  url: z.string().url().optional()
-}).optional()
+  name: z.string(),
+  url: z.string().url()
+})
 })),
   moves: z.array(MoveSummarySchema),
   sprites: z.record(z.string(), z.record(z.string(), z.object({
-  "name-icon": z.string().url().optional()
+  "name-icon": z.string().url()
 })))
 });
 export type TypeDetail = z.infer<typeof TypeDetailSchema>;
@@ -2064,7 +2064,7 @@ export type VersionDetail = z.infer<typeof VersionDetailSchema>;
 export const VersionGroupDetailSchema = z.object({
   id: z.number().int(),
   name: z.string().max(200),
-  order: z.number().int().optional(),
+  order: z.number().int(),
   generation: GenerationSummarySchema,
   move_learn_methods: z.array(z.object({
   name: z.string(),

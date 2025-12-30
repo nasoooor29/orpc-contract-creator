@@ -7,26 +7,26 @@ export const Position3DSchema = z.array(z.unknown());
 export type Position3D = z.infer<typeof Position3DSchema>;
 
 export const MultiPolygonSchema = z.object({
-  bbox: z.union([z.array(z.unknown()), z.array(z.unknown()), z.null()]).optional(),
+  bbox: z.union([z.array(z.unknown()), z.array(z.unknown()), z.null()]),
   type: z.string(),
   coordinates: z.array(z.array(z.array(z.union([Position2DSchema, Position3DSchema]))))
 });
 export type MultiPolygon = z.infer<typeof MultiPolygonSchema>;
 
 export const PolygonSchema = z.object({
-  bbox: z.union([z.array(z.unknown()), z.array(z.unknown()), z.null()]).optional(),
+  bbox: z.union([z.array(z.unknown()), z.array(z.unknown()), z.null()]),
   type: z.string(),
   coordinates: z.array(z.array(z.union([Position2DSchema, Position3DSchema])))
 });
 export type Polygon = z.infer<typeof PolygonSchema>;
 
 export const ClipTool_InputSchema = z.object({
-  aoi: z.union([MultiPolygonSchema, PolygonSchema, z.null()]).optional()
+  aoi: z.union([MultiPolygonSchema, PolygonSchema, z.null()])
 });
 export type ClipTool_Input = z.infer<typeof ClipTool_InputSchema>;
 
 export const ClipTool_OutputSchema = z.object({
-  aoi: z.union([MultiPolygonSchema, PolygonSchema, z.null()]).optional()
+  aoi: z.union([MultiPolygonSchema, PolygonSchema, z.null()])
 });
 export type ClipTool_Output = z.infer<typeof ClipTool_OutputSchema>;
 
@@ -43,7 +43,7 @@ export const ValidationErrorSchema = z.object({
 export type ValidationError = z.infer<typeof ValidationErrorSchema>;
 
 export const HTTPValidationErrorSchema = z.object({
-  detail: z.array(ValidationErrorSchema).optional()
+  detail: z.array(ValidationErrorSchema)
 });
 export type HTTPValidationError = z.infer<typeof HTTPValidationErrorSchema>;
 
@@ -55,8 +55,8 @@ export const OrderProductSchema = z.object({
 export type OrderProduct = z.infer<typeof OrderProductSchema>;
 
 export const OrderTool_OutputSchema = z.object({
-  clip: z.union([ClipTool_OutputSchema, z.null()]).optional(),
-  file_format: z.union([FormatToolSchema, z.null()]).optional()
+  clip: z.union([ClipTool_OutputSchema, z.null()]),
+  file_format: z.union([FormatToolSchema, z.null()])
 });
 export type OrderTool_Output = z.infer<typeof OrderTool_OutputSchema>;
 
@@ -68,8 +68,8 @@ export const OrderDetailsResponseSchema = z.object({
   created_on: z.string(),
   eomap_id: z.string(),
   products: z.array(OrderProductSchema),
-  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]).optional(),
-  error_hints: z.union([z.array(z.string()), z.null()]).optional(),
+  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]),
+  error_hints: z.union([z.array(z.string()), z.null()]),
   state: StateEnumSchema,
   last_message: z.string(),
   s3_path: z.string()
@@ -78,10 +78,10 @@ export type OrderDetailsResponse = z.infer<typeof OrderDetailsResponseSchema>;
 
 export const OrderRequestSchema = z.object({
   scene_ids: z.array(z.string()),
-  clip_aoi: z.union([PolygonSchema, MultiPolygonSchema, z.null()]).optional(),
-  rgb_only: z.boolean().optional(),
+  clip_aoi: z.union([PolygonSchema, MultiPolygonSchema, z.null()]),
+  rgb_only: z.boolean(),
   username: z.string(),
-  webhook_url: z.union([z.string(), z.null()]).optional()
+  webhook_url: z.union([z.string(), z.null()])
 });
 export type OrderRequest = z.infer<typeof OrderRequestSchema>;
 
@@ -90,27 +90,27 @@ export const OrderResponseSchema = z.object({
   created_on: z.string(),
   eomap_id: z.string(),
   products: z.array(OrderProductSchema),
-  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]).optional(),
-  error_hints: z.union([z.array(z.string()), z.null()]).optional(),
+  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]),
+  error_hints: z.union([z.array(z.string()), z.null()]),
   state: StateEnumSchema,
   last_message: z.string(),
   username: z.string(),
   planet_user_key: z.boolean(),
-  webhook_url: z.union([z.string(), z.null()]).optional(),
+  webhook_url: z.union([z.string(), z.null()]),
   s3_path: z.string()
 });
 export type OrderResponse = z.infer<typeof OrderResponseSchema>;
 
 export const OrderStatusResponseSchema = z.object({
-  error_hints: z.union([z.array(z.string()), z.null()]).optional(),
+  error_hints: z.union([z.array(z.string()), z.null()]),
   state: z.string(),
   last_message: z.string()
 });
 export type OrderStatusResponse = z.infer<typeof OrderStatusResponseSchema>;
 
 export const OrderTool_InputSchema = z.object({
-  clip: z.union([ClipTool_InputSchema, z.null()]).optional(),
-  file_format: z.union([FormatToolSchema, z.null()]).optional()
+  clip: z.union([ClipTool_InputSchema, z.null()]),
+  file_format: z.union([FormatToolSchema, z.null()])
 });
 export type OrderTool_Input = z.infer<typeof OrderTool_InputSchema>;
 
@@ -119,8 +119,8 @@ export const OrderUpdateRequestSchema = z.object({
   created_on: z.string(),
   name: z.string(),
   products: z.array(OrderProductSchema),
-  tools: z.union([z.array(OrderTool_InputSchema), z.null()]).optional(),
-  error_hints: z.union([z.array(z.string()), z.null()]).optional(),
+  tools: z.union([z.array(OrderTool_InputSchema), z.null()]),
+  error_hints: z.union([z.array(z.string()), z.null()]),
   state: StateEnumSchema,
   last_message: z.string()
 });
@@ -131,29 +131,29 @@ export const PlanetOrderModelSchema = z.object({
   created_on: z.string(),
   eomap_id: z.string(),
   products: z.array(OrderProductSchema),
-  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]).optional(),
-  error_hints: z.union([z.array(z.string()), z.null()]).optional(),
+  tools: z.union([z.array(OrderTool_OutputSchema), z.null()]),
+  error_hints: z.union([z.array(z.string()), z.null()]),
   state: StateEnumSchema,
   last_message: z.string(),
   username: z.string(),
   planet_user_key: z.boolean(),
-  webhook_url: z.union([z.string(), z.null()]).optional(),
+  webhook_url: z.union([z.string(), z.null()]),
   s3_path: z.string()
 });
 export type PlanetOrderModel = z.infer<typeof PlanetOrderModelSchema>;
 
 export const OrdersResponseSchema = z.object({
   data: z.array(PlanetOrderModelSchema),
-  last_evaluated_key: z.union([z.string(), z.null()]).optional()
+  last_evaluated_key: z.union([z.string(), z.null()])
 });
 export type OrdersResponse = z.infer<typeof OrdersResponseSchema>;
 
 export const SearchRequestSchema = z.object({
   geometry: z.union([PolygonSchema, MultiPolygonSchema]),
   start_date: z.string().datetime(),
-  end_date: z.union([z.string().datetime(), z.null()]).optional(),
-  max_cloud_cover: z.union([z.number().int(), z.null()]).optional(),
-  include_preview_scenes: z.boolean().optional()
+  end_date: z.union([z.string().datetime(), z.null()]),
+  max_cloud_cover: z.union([z.number().int(), z.null()]),
+  include_preview_scenes: z.boolean()
 });
 export type SearchRequest = z.infer<typeof SearchRequestSchema>;
 
