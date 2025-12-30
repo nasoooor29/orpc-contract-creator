@@ -2,8 +2,7 @@ import { OpenAPILink } from "@orpc/openapi-client/fetch"
 import { Z, contract, createVisoryClient } from "./generated/visory"
 const client = createVisoryClient("http://localhost:8080")
 
-
-
+// NOTE: you want to use tanstack-query with orpc
 import { createTanstackQueryUtils } from '@orpc/tanstack-query' // now if you need any integration just use it
 import { createORPCClient, onError } from "@orpc/client"
 import type { JsonifiedClient } from "@orpc/openapi-client"
@@ -11,13 +10,14 @@ import type { ContractRouterClient } from "@orpc/contract"
 export const orpc = createTanstackQueryUtils(client, {})
 orpc.accounts.getAuthMe.queryOptions()// now you can use "useQuery" from tanstack-query with orpc client
 
-// you need specific types or schemas? they are all here:
+// NOTE: you need specific types or schemas? they are all here:
 type AuthMeResponse = Z.user_GetUserAndSessionByTokenRow
 const authMeSchema = Z.user_GetUserAndSessionByTokenRowSchema
 
+// NOTE: you want custom client just update the ./generated/{specName}/client.ts file if needed
 
 
-// you want the contract to make custom client
+// NOTE: you want the contract to make custom client
 export function createCustomVisoryClient(baseUrl: string) {
     const link = new OpenAPILink(contract, {
         url: baseUrl,
