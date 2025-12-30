@@ -1,5 +1,6 @@
 import { readdir, readFile, mkdir, writeFile } from "node:fs/promises";
-import { join, basename } from "node:path";
+import { join, basename, extname } from "node:path";
+import { parse as parseYaml } from "yaml";
 import { parseOpenAPISpec } from "./src/generator/openapi-parser";
 import { generateZodSchemas } from "./src/generator/zod-generator";
 import { generateContract } from "./src/generator/contract-builder";
@@ -15,14 +16,17 @@ async function main() {
   // Ensure output directory exists
   await mkdir(OUTPUT_DIR, { recursive: true });
 
-  // Get all spec files
+  // Get all spec files (JSON and YAML)
   const files = await readdir(SPECS_DIR);
-  const specFiles = files.filter((f) => f.endsWith(".json"));
+  const specFiles = files.filter((f) => 
+    f.endsWith(".json") || f.endsWith(".yaml") || f.endsWith(".yml")
+  );
 
   console.log(`Found ${specFiles.length} spec file(s):\n`);
 
   for (const specFile of specFiles) {
-    const specName = basename(specFile, ".json");
+    const ext = extname(specFile);
+    const specName = basename(specFile, ext);
     console.log(`Processing: ${specFile}`);
 
     try {
@@ -40,7 +44,14 @@ async function main() {
 async function processSpec(specName: string, specPath: string) {
   // Read and parse the OpenAPI spec
   const specContent = await readFile(specPath, "utf-8");
-  const spec: OpenAPISpec = JSON.parse(specContent);
+  const ext = extname(specPath);
+  
+  let spec: OpenAPISpec;
+  if (ext === ".yaml" || ext === ".yml") {
+    spec = parseYaml(specContent) as OpenAPISpec;
+  } else {
+    spec = JSON.parse(specContent);
+  }
 
   console.log(`  - Parsing OpenAPI spec (${spec.info.title} v${spec.info.version})`);
 

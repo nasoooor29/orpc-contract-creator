@@ -10,6 +10,7 @@
         "@orpc/openapi-client": "^1.13.2",
         "@orpc/server": "^1.13.2",
         "quicktype-core": "^23.2.6",
+        "yaml": "^2.8.2",
         "zod": "^4.2.1",
       },
       "devDependencies": {
