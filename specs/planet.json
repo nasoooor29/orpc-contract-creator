@@ -1,0 +1,1526 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Planet API",
+        "description": "Planet API from Eomap to handle search and ordering.",
+        "contact": {
+            "name": "IT Eomap",
+            "url": "https://www.eomap.com/",
+            "email": "it@eomap.de"
+        },
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "tags": [
+                    "Health Check"
+                ],
+                "summary": "Health Status",
+                "operationId": "health_status_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "post": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Search",
+                "operationId": "search_search_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/SearchResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Search Search Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "OAuth2AuthorizationCodeBearerSettings": []
+                    }
+                ]
+            }
+        },
+        "/thumbnails/{scene_id}": {
+            "get": {
+                "tags": [
+                    "Visualize"
+                ],
+                "summary": "Get Thumbnail",
+                "operationId": "get_thumbnail_thumbnails__scene_id__get",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "OAuth2AuthorizationCodeBearerSettings": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "scene_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Scene Id"
+                        },
+                        "example": "20240102_103330_67_2430"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 512,
+                            "default": 256,
+                            "title": "Size"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            },
+                            "image/png": {}
+                        }
+                    },
+                    "404": {
+                        "content": {
+                            "text/plain": {}
+                        },
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tiles/{scene_id}/{z}/{x}/{y}.png": {
+            "get": {
+                "tags": [
+                    "Visualize"
+                ],
+                "summary": "Get Tile",
+                "operationId": "get_tile_tiles__scene_id___z___x___y__png_get",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "OAuth2AuthorizationCodeBearerSettings": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "scene_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Scene Id"
+                        },
+                        "example": "20240102_103330_67_2430"
+                    },
+                    {
+                        "name": "z",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Z"
+                        },
+                        "example": 14
+                    },
+                    {
+                        "name": "x",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "X"
+                        },
+                        "example": 7744
+                    },
+                    {
+                        "name": "y",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Y"
+                        },
+                        "example": 6726
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            },
+                            "image/png": {}
+                        }
+                    },
+                    "404": {
+                        "content": {
+                            "text/plain": {}
+                        },
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Create Order",
+                "operationId": "create_order_orders_post",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Orders",
+                "operationId": "get_orders_orders_get",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "last_evaluated_key",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Last Evaluated Key"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Username"
+                        }
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/StateEnum"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "State"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrdersResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{eomap_id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Order",
+                "operationId": "get_order_orders__eomap_id__get",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "eomap_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Eomap Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderDetailsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{eomap_id}/status": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Order Status",
+                "operationId": "get_order_status_orders__eomap_id__status_get",
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "eomap_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Eomap Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Update Order Status",
+                "operationId": "update_order_status_orders__eomap_id__status_post",
+                "parameters": [
+                    {
+                        "name": "eomap_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Eomap Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ClipTool-Input": {
+                "properties": {
+                    "aoi": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MultiPolygon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Polygon"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aoi"
+                    }
+                },
+                "type": "object",
+                "title": "ClipTool"
+            },
+            "ClipTool-Output": {
+                "properties": {
+                    "aoi": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MultiPolygon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Polygon"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aoi"
+                    }
+                },
+                "type": "object",
+                "title": "ClipTool"
+            },
+            "FormatTool": {
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "title": "Format"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "format"
+                ],
+                "title": "FormatTool"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "MultiPolygon": {
+                "properties": {
+                    "bbox": {
+                        "anyOf": [
+                            {
+                                "prefixItems": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ],
+                                "type": "array",
+                                "maxItems": 4,
+                                "minItems": 4
+                            },
+                            {
+                                "prefixItems": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ],
+                                "type": "array",
+                                "maxItems": 6,
+                                "minItems": 6
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bbox"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "MultiPolygon",
+                        "title": "Type"
+                    },
+                    "coordinates": {
+                        "items": {
+                            "items": {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Position2D"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Position3D"
+                                        }
+                                    ]
+                                },
+                                "type": "array",
+                                "minItems": 4
+                            },
+                            "type": "array"
+                        },
+                        "type": "array",
+                        "title": "Coordinates"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "coordinates"
+                ],
+                "title": "MultiPolygon",
+                "description": "MultiPolygon Model"
+            },
+            "OrderDetailsResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "title": "Created On"
+                    },
+                    "eomap_id": {
+                        "type": "string",
+                        "title": "Eomap Id"
+                    },
+                    "products": {
+                        "items": {
+                            "$ref": "#/components/schemas/OrderProduct"
+                        },
+                        "type": "array",
+                        "title": "Products"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/OrderTool-Output"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "error_hints": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Hints"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/StateEnum"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "title": "Last Message"
+                    },
+                    "s3_path": {
+                        "type": "string",
+                        "title": "S3 Path",
+                        "readOnly": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "created_on",
+                    "eomap_id",
+                    "products",
+                    "state",
+                    "last_message",
+                    "s3_path"
+                ],
+                "title": "OrderDetailsResponse"
+            },
+            "OrderProduct": {
+                "properties": {
+                    "item_ids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Item Ids"
+                    },
+                    "item_type": {
+                        "type": "string",
+                        "title": "Item Type"
+                    },
+                    "product_bundle": {
+                        "type": "string",
+                        "title": "Product Bundle"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "item_ids",
+                    "item_type",
+                    "product_bundle"
+                ],
+                "title": "OrderProduct"
+            },
+            "OrderRequest": {
+                "properties": {
+                    "scene_ids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scene Ids"
+                    },
+                    "clip_aoi": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Polygon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/MultiPolygon"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Clip Aoi"
+                    },
+                    "rgb_only": {
+                        "type": "boolean",
+                        "title": "Rgb Only",
+                        "default": false
+                    },
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "webhook_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Webhook Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "scene_ids",
+                    "username"
+                ],
+                "title": "OrderRequest"
+            },
+            "OrderResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "title": "Created On"
+                    },
+                    "eomap_id": {
+                        "type": "string",
+                        "title": "Eomap Id"
+                    },
+                    "products": {
+                        "items": {
+                            "$ref": "#/components/schemas/OrderProduct"
+                        },
+                        "type": "array",
+                        "title": "Products"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/OrderTool-Output"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "error_hints": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Hints"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/StateEnum"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "title": "Last Message"
+                    },
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "planet_user_key": {
+                        "type": "boolean",
+                        "title": "Planet User Key"
+                    },
+                    "webhook_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Webhook Url"
+                    },
+                    "s3_path": {
+                        "type": "string",
+                        "title": "S3 Path",
+                        "readOnly": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "created_on",
+                    "eomap_id",
+                    "products",
+                    "state",
+                    "last_message",
+                    "username",
+                    "planet_user_key",
+                    "s3_path"
+                ],
+                "title": "OrderResponse"
+            },
+            "OrderStatusResponse": {
+                "properties": {
+                    "error_hints": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Hints"
+                    },
+                    "state": {
+                        "type": "string",
+                        "title": "State"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "title": "Last Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "state",
+                    "last_message"
+                ],
+                "title": "OrderStatusResponse"
+            },
+            "OrderTool-Input": {
+                "properties": {
+                    "clip": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ClipTool-Input"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "file_format": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FormatTool"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "OrderTool"
+            },
+            "OrderTool-Output": {
+                "properties": {
+                    "clip": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ClipTool-Output"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "file_format": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FormatTool"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "OrderTool"
+            },
+            "OrderUpdateRequest": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "title": "Created On"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "products": {
+                        "items": {
+                            "$ref": "#/components/schemas/OrderProduct"
+                        },
+                        "type": "array",
+                        "title": "Products"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/OrderTool-Input"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "error_hints": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Hints"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/StateEnum"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "title": "Last Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "created_on",
+                    "name",
+                    "products",
+                    "state",
+                    "last_message"
+                ],
+                "title": "OrderUpdateRequest"
+            },
+            "OrdersResponse": {
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/PlanetOrderModel"
+                        },
+                        "type": "array",
+                        "title": "Data"
+                    },
+                    "last_evaluated_key": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Last Evaluated Key"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "data"
+                ],
+                "title": "OrdersResponse"
+            },
+            "PlanetOrderModel": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "title": "Created On"
+                    },
+                    "eomap_id": {
+                        "type": "string",
+                        "title": "Eomap Id"
+                    },
+                    "products": {
+                        "items": {
+                            "$ref": "#/components/schemas/OrderProduct"
+                        },
+                        "type": "array",
+                        "title": "Products"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/OrderTool-Output"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "error_hints": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Hints"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/StateEnum"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "title": "Last Message"
+                    },
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "planet_user_key": {
+                        "type": "boolean",
+                        "title": "Planet User Key"
+                    },
+                    "webhook_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Webhook Url"
+                    },
+                    "s3_path": {
+                        "type": "string",
+                        "title": "S3 Path",
+                        "readOnly": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "created_on",
+                    "eomap_id",
+                    "products",
+                    "state",
+                    "last_message",
+                    "username",
+                    "planet_user_key",
+                    "s3_path"
+                ],
+                "title": "PlanetOrderModel"
+            },
+            "Polygon": {
+                "properties": {
+                    "bbox": {
+                        "anyOf": [
+                            {
+                                "prefixItems": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ],
+                                "type": "array",
+                                "maxItems": 4,
+                                "minItems": 4
+                            },
+                            {
+                                "prefixItems": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ],
+                                "type": "array",
+                                "maxItems": 6,
+                                "minItems": 6
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bbox"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "Polygon",
+                        "title": "Type"
+                    },
+                    "coordinates": {
+                        "items": {
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Position2D"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/Position3D"
+                                    }
+                                ]
+                            },
+                            "type": "array",
+                            "minItems": 4
+                        },
+                        "type": "array",
+                        "title": "Coordinates"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "coordinates"
+                ],
+                "title": "Polygon",
+                "description": "Polygon Model"
+            },
+            "Position2D": {
+                "prefixItems": [
+                    {
+                        "type": "number",
+                        "title": "Longitude"
+                    },
+                    {
+                        "type": "number",
+                        "title": "Latitude"
+                    }
+                ],
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 2
+            },
+            "Position3D": {
+                "prefixItems": [
+                    {
+                        "type": "number",
+                        "title": "Longitude"
+                    },
+                    {
+                        "type": "number",
+                        "title": "Latitude"
+                    },
+                    {
+                        "type": "number",
+                        "title": "Altitude"
+                    }
+                ],
+                "type": "array",
+                "maxItems": 3,
+                "minItems": 3
+            },
+            "SearchRequest": {
+                "properties": {
+                    "geometry": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Polygon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/MultiPolygon"
+                            }
+                        ],
+                        "title": "Geometry"
+                    },
+                    "start_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Start Date"
+                    },
+                    "end_date": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "End Date"
+                    },
+                    "max_cloud_cover": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Cloud Cover"
+                    },
+                    "include_preview_scenes": {
+                        "type": "boolean",
+                        "title": "Include Preview Scenes",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "geometry",
+                    "start_date"
+                ],
+                "title": "SearchRequest",
+                "examples": [
+                    {
+                        "end_date": "2024-01-03",
+                        "geometry": {
+                            "coordinates": [
+                                [
+                                    [
+                                        [
+                                            -9.68,
+                                            30.5
+                                        ],
+                                        [
+                                            -9.68,
+                                            30.49
+                                        ],
+                                        [
+                                            -9.67,
+                                            30.49
+                                        ],
+                                        [
+                                            -9.67,
+                                            30.5
+                                        ],
+                                        [
+                                            -9.68,
+                                            30.5
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            "type": "MultiPolygon"
+                        },
+                        "include_preview_scenes": false,
+                        "max_cloud_cover": 20,
+                        "start_date": "2024-01-01"
+                    }
+                ]
+            },
+            "SearchResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "cloud_cover": {
+                        "type": "integer",
+                        "title": "Cloud Cover"
+                    },
+                    "sun_azimuth": {
+                        "type": "number",
+                        "title": "Sun Azimuth"
+                    },
+                    "sun_elevation": {
+                        "type": "number",
+                        "title": "Sun Elevation"
+                    },
+                    "geometry": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Polygon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/MultiPolygon"
+                            }
+                        ],
+                        "title": "Geometry"
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "title": "Datetime"
+                    },
+                    "publishing_stage": {
+                        "type": "string",
+                        "title": "Publishing Stage"
+                    },
+                    "sensor": {
+                        "type": "string",
+                        "title": "Sensor",
+                        "readOnly": true
+                    },
+                    "scene_name": {
+                        "type": "string",
+                        "title": "Scene Name",
+                        "readOnly": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "cloud_cover",
+                    "sun_azimuth",
+                    "sun_elevation",
+                    "geometry",
+                    "datetime",
+                    "publishing_stage",
+                    "sensor",
+                    "scene_name"
+                ],
+                "title": "SearchResponse"
+            },
+            "StateEnum": {
+                "type": "string",
+                "enum": [
+                    "queued",
+                    "running",
+                    "success",
+                    "partial",
+                    "failed",
+                    "cancelled"
+                ],
+                "title": "StateEnum"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "APIKeyHeader": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-Key"
+            },
+            "OAuth2AuthorizationCodeBearerSettings": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "scopes": {},
+                        "authorizationUrl": "https://auth.eomap.com/auth/realms/eomap/protocol/openid-connect/auth",
+                        "tokenUrl": "https://auth.eomap.com/auth/realms/eomap/protocol/openid-connect/token"
+                    }
+                }
+            }
+        }
+    }
+}
