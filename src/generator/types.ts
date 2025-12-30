@@ -154,15 +154,14 @@ export const HTTP_TO_ORPC_ERROR: Record<number, string> = {
     503: "SERVICE_UNAVAILABLE",
     504: "GATEWAY_TIMEOUT",
 };
-export type INTEGRATIONS =
-    | "Pinia Colada"
-    | "React SWR"
-    | "Tanstack Query"
+// export type INTEGRATIONS =
+//     | "Pinia Colada"
+//     | "React SWR"
+//     | "Tanstack Query"
 
 
 export interface GeneratorOptions extends ContractGeneratorOptions, ZodGeneratorOptions {
     // Options accessible from index.ts
     outputDir: string;
-    integrations: INTEGRATIONS[];
 }
 

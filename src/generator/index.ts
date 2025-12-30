@@ -9,7 +9,6 @@ import { generateClient } from "./client-generator";
 
 export async function processSpec(specName: string, specPath: string, options: GeneratorOptions = {
     outputDir: "./generated",
-    integrations: []
 }) {
     // Read and parse the OpenAPI spec
     const specContent = await readFile(specPath, "utf-8");
@@ -54,11 +53,35 @@ export async function processSpec(specName: string, specPath: string, options: G
         await writeFile(clientPath, clientContent);
     }
 
+    // Generate index file
+    console.log(`  - Generating index file...`);
+    const indexContent = generateIndex(specName);
+    await writeFile(join(outputDir, "index.ts"), indexContent);
 }
 
-async function indexGenerator() {
+function toPascalCase(str: string): string {
+    return str
+        .replace(/[^a-zA-Z0-9]/g, " ")
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join("");
+}
 
+function generateIndex(specName: string): string {
+    const pascalName = toPascalCase(specName);
 
+    return `// Auto-generated index file for ${specName}
+export * as Z from "./zod-types.gen";
+export { contract } from "./contract";
+export { create${pascalName}Client } from "./client";
+export type { ${pascalName}Client } from "./client";
+`;
+}
+
+export async function generateIndexFile(specName: string, outputDir: string): Promise<void> {
+    const indexPath = join(outputDir, specName, "index.ts");
+    const indexContent = generateIndex(specName);
+    await writeFile(indexPath, indexContent);
 }
 
 export * from "./types";
