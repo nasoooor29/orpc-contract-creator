@@ -8,5 +8,12 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@orpc/client": "^1.13.2",
+    "@orpc/openapi": "^1.13.2",
+    "@orpc/openapi-client": "^1.13.2",
+    "@orpc/server": "^1.13.2",
+    "zod": "^4.2.1"
   }
 }
