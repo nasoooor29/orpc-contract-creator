@@ -4,6 +4,7 @@ import { readFile, mkdir, writeFile, access } from "fs/promises";
 import { parse as parseYaml } from "yaml";
 import { parseOpenAPISpec } from "./openapi-parser";
 import { generateZodSchemas } from "./zod-generator";
+import { generateTSInterfaces } from "./ts-generator";
 import { generateContract } from "./contract-builder";
 import { generateClient } from "./client-generator";
 
@@ -32,7 +33,12 @@ export async function processSpec(specName: string, specPath: string, options: G
     const outputDir = join(options.outputDir, specName);
     await mkdir(outputDir, { recursive: true });
 
-    // Generate Zod schemas
+    // Generate TypeScript interfaces (pure types, no runtime)
+    console.log(`  - Generating TypeScript interfaces...`);
+    const tsContent = await generateTSInterfaces(schemas, spec, options);
+    await writeFile(join(outputDir, "types.gen.ts"), tsContent);
+
+    // Generate Zod schemas (for oRPC runtime validation)
     console.log(`  - Generating Zod schemas...`);
     const zodContent = await generateZodSchemas(schemas, spec, options);
     await writeFile(join(outputDir, "zod-types.gen.ts"), zodContent);
@@ -71,7 +77,14 @@ function generateIndex(specName: string): string {
     const pascalName = toPascalCase(specName);
 
     return `// Auto-generated index file for ${specName}
+
+// Pure TypeScript types (no runtime overhead)
+export * from "./types.gen";
+
+// Zod schemas (for runtime validation)
 export * as Z from "./zod-types.gen";
+
+// oRPC contract and client
 export { contract } from "./contract";
 export { create${pascalName}Client } from "./client";
 export type { ${pascalName}Client } from "./client";
@@ -87,5 +100,6 @@ export async function generateIndexFile(specName: string, outputDir: string): Pr
 export * from "./types";
 export * from "./openapi-parser";
 export * from "./zod-generator";
+export * from "./ts-generator";
 export * from "./contract-builder";
 export * from "./client-generator";
